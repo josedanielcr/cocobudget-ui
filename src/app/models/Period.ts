@@ -1,5 +1,5 @@
 import {BaseClass} from './BaseClass';
-import {PeriodLength} from '../PeriodLength';
+import {PeriodLength} from './utils/PeriodLength';
 
 export class Period extends BaseClass {
   StartDate : Date;

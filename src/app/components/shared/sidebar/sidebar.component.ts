@@ -21,9 +21,11 @@ export class SidebarComponent {
   public currRoute : string | undefined;
 
   menuOptions : MenuOption[] = [
-    {icon: 'wallet', name: 'Budget', route: '/home/budget'},
-    {icon: 'account_balance', name: 'Accounts', route: '/home/accounts'},
-    {icon: 'receipt_long', name: 'Transactions', route: '/home/transactions'},
+    {name: 'Budget', route: '/home/budget'},
+    {name: 'Accounts', route: '/home/accounts'},
+    {name: 'Transactions', route: '/home/transactions'},
+    //ADD PERIODS
+    {name: 'Periods', route: '/home/periods'},
   ];
 
   constructor(public accountService : AccountService,

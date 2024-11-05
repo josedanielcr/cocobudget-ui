@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 
 import { IStaticMethods } from 'preline/preline';
@@ -6,6 +6,8 @@ import {MSAL_GUARD_CONFIG, MsalBroadcastService, MsalGuardConfiguration, MsalSer
 import {AuthenticationResult, EventMessage, EventType, InteractionStatus, PopupRequest} from '@azure/msal-browser';
 import {filter, Subject, takeUntil} from 'rxjs';
 import {AccountService} from './services/accounts/account.service';
+import {ToastContainerComponent} from './components/shared/toast-container/toast-container.component';
+import {MessageService} from './services/utils/message.service';
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;
@@ -15,22 +17,29 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastContainerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit{
 
   title = 'cocobudget-ui';
   isIframe = false;
   loginDisplay = false;
   private readonly _destroying$ = new Subject<void>();
+  @ViewChild(ToastContainerComponent) toastContainer: ToastContainerComponent | undefined;
+
 
   constructor(private router : Router,
               @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
               private authService: MsalService,
               private msalBroadcastService: MsalBroadcastService,
-              private accountService : AccountService) {
+              private accountService : AccountService,
+              private messageService : MessageService) {
+  }
+
+  ngAfterViewInit(): void {
+    this.messageService.setToastContainer(this.toastContainer as ToastContainerComponent);
   }
 
   ngOnInit() {
