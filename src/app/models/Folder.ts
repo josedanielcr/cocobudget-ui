@@ -3,22 +3,22 @@ import {BaseClass} from './BaseClass';
 export class Folder extends BaseClass {
   id : string;
   name : string;
-  icon : string;
-  color : string;
+  description : string;
   userId : string;
+  periodId : string;
 
   constructor(
     id : string,
     name : string,
-    icon : string,
-    color : string,
-    userId : string
+    description : string,
+    userId : string,
+    periodId : string
   ) {
     super();  // Call to the base class constructor
     this.id = id;
     this.name = name;
-    this.icon = icon;
-    this.color = color;
+    this.description = description;
     this.userId = userId;
+    this.periodId = periodId;
   }
 }
