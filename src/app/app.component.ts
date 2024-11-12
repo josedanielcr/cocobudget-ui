@@ -8,6 +8,7 @@ import {filter, Subject, takeUntil} from 'rxjs';
 import {AccountService} from './services/accounts/account.service';
 import {ToastContainerComponent} from './components/shared/toast-container/toast-container.component';
 import {MessageService} from './services/utils/message.service';
+
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;

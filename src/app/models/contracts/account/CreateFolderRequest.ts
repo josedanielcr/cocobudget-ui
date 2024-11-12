@@ -1,13 +1,11 @@
 export class CreateFolderRequest {
   name : string;
-  icon : string;
-  color : string;
+  description : string;
   userId : string;
 
-  constructor(name : string, icon : string, color : string, userId : string){
+  constructor(name : string, description : string, userId : string){
     this.name = name;
-    this.icon = icon;
-    this.color = color;
+    this.description = description;
     this.userId = userId;
   }
 }
