@@ -92,7 +92,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit{
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
           window.HSStaticMethods.autoInit();
-        }, 100);
+        }, 500);
       }
     });
   }

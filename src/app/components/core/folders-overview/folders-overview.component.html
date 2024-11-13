@@ -1,0 +1,37 @@
+<div class="mb-8 md:flex md:items-center">
+  <div>
+    <h2 class="text-xl font-bold text-gray-800">
+      Folders Overview
+    </h2>
+    <p class="text-sm text-gray-600">
+      Here you can see all the folders and categories that you have created.
+    </p>
+  </div>
+  <div class="ml-auto">
+    <app-create-folder></app-create-folder>
+  </div>
+</div>
+<div class="hs-accordion-group">
+  @for(folder of foldersService.folders(); track folder.id){
+    <div class="hs-accordion bg-white border -mt-px first:rounded-t-lg last:rounded-b-lg">
+      <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5
+      hover:text-gray-500 disabled:opacity-50 disabled:pointer-events-none" aria-expanded="false" aria-controls="hs-basic-bordered-collapse-two">
+        <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+        </svg>
+        {{ folder.name }}
+      </button>
+      <div class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-bordered-heading-two">
+        <div class="pb-4 px-5">
+          <p class="text-sm text-gray-600">
+            {{ folder.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+</div>
