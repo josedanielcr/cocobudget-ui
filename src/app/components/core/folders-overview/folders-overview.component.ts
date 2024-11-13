@@ -1,9 +1,7 @@
-import {AfterViewInit, Component, Renderer2} from '@angular/core';
+import {Component, effect, ElementRef, ViewChild} from '@angular/core';
 import {FolderService} from '../../../services/folders/folder.service';
-import {HSOverlay} from 'preline/preline';
 import {CreateFolderComponent} from '../create-folder/create-folder.component';
-
-declare const window: any; // To access the global Preline UI initialization function
+import {HSAccordion} from 'preline/preline';
 
 @Component({
   selector: 'app-folders-overview',
@@ -14,16 +12,32 @@ declare const window: any; // To access the global Preline UI initialization fun
   templateUrl: './folders-overview.component.html',
   styleUrl: './folders-overview.component.css'
 })
-export class FoldersOverviewComponent implements AfterViewInit{
+export class FoldersOverviewComponent {
 
-  constructor(public foldersService : FolderService, private renderer : Renderer2) {
+  @ViewChild('accordion') accordion: ElementRef | undefined;
+
+  constructor(public foldersService : FolderService) {
+    this.onFolderSignalChange();
   }
 
-  ngAfterViewInit() {
-    this.renderer.listen('window', 'load', () => {
-      if (window.HSAccordion) {
-        window.HSAccordion.autoInit();
-      }
+  expandAllFolders() {
+    for(const child of this.accordion?.nativeElement.children) {
+      HSAccordion.show(child);
+    }
+  }
+
+  collapseAllFolders() {
+    for(const child of this.accordion?.nativeElement.children) {
+      HSAccordion.hide(child);
+    }
+  }
+
+  onFolderSignalChange() {
+    effect(() => {
+      const folders = this.foldersService.folders();
+      setTimeout(() => {
+        window.HSStaticMethods.autoInit();
+      }, 500);
     });
   }
 }

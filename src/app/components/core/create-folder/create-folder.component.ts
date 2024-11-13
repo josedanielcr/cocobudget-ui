@@ -74,6 +74,8 @@ export class CreateFolderComponent implements AfterViewInit {
     this.folderService.createFolder(folderRequest).subscribe({
       next: (result) => {
         this.messageService.showToastMessage('Folder created successfully', ToastType.Success);
+        this.folderName.reset();
+        this.folderDescription.reset();
         this.close();
       },
       error: (error) => {

@@ -11,7 +11,23 @@
     <app-create-folder></app-create-folder>
   </div>
 </div>
-<div class="hs-accordion-group">
+
+<div class="inline-flex rounded-lg shadow-sm mb-4">
+  <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 -ms-px
+  first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border
+  border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50
+  disabled:opacity-50 disabled:pointer-events-none" (click)="expandAllFolders()">
+    Expand All
+  </button>
+  <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2
+  -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border
+   border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none
+   focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" (click)="collapseAllFolders()">
+    Collapse All
+  </button>
+</div>
+
+<div class="hs-accordion-group" data-hs-accordion-always-open="" #accordion>
   @for(folder of foldersService.folders(); track folder.id){
     <div class="hs-accordion bg-white border -mt-px first:rounded-t-lg last:rounded-b-lg">
       <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5
