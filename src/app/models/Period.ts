@@ -2,31 +2,31 @@ import {BaseClass} from './BaseClass';
 import {PeriodLength} from './utils/PeriodLength';
 
 export class Period extends BaseClass {
-  StartDate : Date;
-  EndDate : Date;
-  Length : PeriodLength;
-  DayLength : number;
-  UserId : string;
-  AmountSpent : number;
-  BudgetAmount : number
+  startDate: Date;
+  endDate: Date;
+  length: PeriodLength;
+  dayLength: number;
+  userId: string;
+  amountSpent: number;
+  budgetAmount: number;
 
   constructor(
-    id : string,
-    startDate : Date,
-    endDate : Date,
-    length : PeriodLength,
-    dayLength : number,
-    userId : string,
-    amountSpent : number,
-    budgetAmount : number
+    id: string,
+    startDate: Date,
+    endDate: Date,
+    length: PeriodLength,
+    dayLength: number,
+    userId: string,
+    amountSpent: number,
+    budgetAmount: number
   ) {
     super();
-    this.StartDate = startDate;
-    this.EndDate = endDate;
-    this.Length = length;
-    this.DayLength = dayLength;
-    this.UserId = userId;
-    this.AmountSpent = amountSpent;
-    this.BudgetAmount = budgetAmount;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.length = length;
+    this.dayLength = dayLength;
+    this.userId = userId;
+    this.amountSpent = amountSpent;
+    this.budgetAmount = budgetAmount;
   }
 }
