@@ -7,7 +7,7 @@ import {merge} from 'rxjs';
 import {MessageService} from '../../../services/utils/message.service';
 import {FolderService} from '../../../services/folders/folder.service';
 import {ToastType} from '../../../models/Enums/ToastType.enum';
-import {CreateFolderRequest} from '../../../models/contracts/account/CreateFolderRequest';
+import {CreateFolderRequest} from '../../../models/contracts/folder/CreateFolderRequest';
 import {AccountService} from '../../../services/accounts/account.service';
 
 @Component({

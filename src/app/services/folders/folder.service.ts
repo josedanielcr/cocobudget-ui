@@ -3,9 +3,10 @@ import {environment} from '../../../environments/environment';
 import {Folder} from '../../models/Folder';
 import {HttpClient} from '@angular/common/http';
 import {AccountService} from '../accounts/account.service';
-import {CreateFolderRequest} from '../../models/contracts/account/CreateFolderRequest';
+import {CreateFolderRequest} from '../../models/contracts/folder/CreateFolderRequest';
 import {map, Observable} from 'rxjs';
 import {Result} from '../../shared/Result';
+import {UpdateFolderRequest} from '../../models/contracts/folder/UpdateFolderRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,36 @@ export class FolderService {
           const folders = response as Result<Folder[]>;
           this.folders.update(value => folders.value);
           return folders;
+        })
+      );
+  }
+
+  public deleteFolder(folderId : string) : Observable<Result<Folder>>{
+    return this.httpClient.delete(`${this._budgetServiceEndpoint}${this._folderServicePrefix}/${folderId}`)
+      .pipe(
+        map((response: any)=> {
+          const folderResult = response as Result<Folder>;
+          this.folders.update((currentFolders) =>
+            folderResult.value
+              ? (currentFolders ?? []).filter(folder => folder.id !== folderId)
+              : currentFolders
+          );
+          return folderResult;
+        })
+      );
+  }
+
+  public updateFolder(updateFolderReq : UpdateFolderRequest) : Observable<Result<Folder>>{
+    return this.httpClient.put(`${this._budgetServiceEndpoint}${this._folderServicePrefix}`, updateFolderReq)
+      .pipe(
+        map((response: any)=> {
+          const folderResult = response as Result<Folder>;
+          this.folders.update((currentFolders) =>
+            folderResult.value
+              ? (currentFolders ?? []).map(folder => folder.id === folderResult.value?.id ? folderResult.value : folder)
+              : currentFolders
+          );
+          return folderResult;
         })
       );
   }

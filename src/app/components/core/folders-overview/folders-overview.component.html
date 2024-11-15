@@ -29,52 +29,54 @@
 
 <div class="hs-accordion-group" data-hs-accordion-always-open="" #accordion>
   @for(folder of foldersService.folders(); track folder.id){
-    <div class="hs-accordion bg-white border -mt-px first:rounded-t-lg last:rounded-b-lg">
-      <div class="flex items-center">
-        <button class="hs-accordion-toggle inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5
+    @if(folder.isActive){
+      <div class="hs-accordion bg-white border -mt-px first:rounded-t-lg last:rounded-b-lg">
+        <div class="flex items-center">
+          <button class="hs-accordion-toggle inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5
       hover:text-gray-500 disabled:opacity-50 disabled:pointer-events-none" aria-expanded="false" aria-controls="hs-basic-bordered-collapse-two">
-          <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-          </svg>
-          <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"></path>
-          </svg>
-          {{ folder.name }}
-        </button>
+            <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="M12 5v14"></path>
+            </svg>
+            <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+            </svg>
+            {{ folder.name }}
+          </button>
 
-<!--        actions-->
-        <div class="px-6 py-2">
-          <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
-            <button id="hs-table-dropdown-1" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-            </button>
-            <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
-              <div class="py-2 first:pt-0 last:pb-0">
+          <!--        actions-->
+          <div class="px-6 py-2">
+            <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
+              <button id="hs-table-dropdown-1" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </button>
+              <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-40 z-20 bg-white shadow-2xl rounded-lg p-2 mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-table-dropdown-1">
+                <div class="py-2 first:pt-0 last:pb-0">
                           <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400">
                             Actions
                           </span>
-                <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
-                  Rename
-                </a>
-              </div>
-              <div class="py-2 first:pt-0 last:pb-0">
-                <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500" href="#">
-                  Delete
-                </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 cursor-pointer" (click)="updateFolder(folder)">
+                    Rename
+                  </a>
+                </div>
+                <div class="py-2 first:pt-0 last:pb-0">
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 cursor-pointer" (click)="deleteFolder(folder)">
+                    Delete
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-      </div>
-      <div class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-bordered-heading-two">
-        <div class="pb-4 px-5">
-          <p class="text-sm text-gray-600">
-            {{ folder.description }}
-          </p>
+        </div>
+        <div class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-bordered-heading-two">
+          <div class="pb-4 px-5">
+            <p class="text-sm text-gray-600">
+              {{ folder.description }}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    }
   }
 </div>
