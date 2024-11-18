@@ -41,20 +41,6 @@
                     <p class="text-sm text-red-600 mt-2" id="hs-validation-name">Please add the name of your folder</p>
                   }
                 </div>
-
-                <div class="space-y-2">
-                  <label for="af-submit-app-description" class="inline-block text-sm font-medium text-gray-800 mt-2.5">
-                    Description
-                  </label>
-
-                  <textarea id="af-submit-app-description" class="border-1 py-2 px-3 block w-full border-gray-200 rounded-lg text-sm
-                  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                            [formControl]="folderDescription"
-                            rows="6" placeholder="Add information that can be valuable for you to recognize this folder meaning"></textarea>
-                  @if(folderDescription.invalid && (!folderDescription.untouched)) {
-                    <p class="text-sm text-red-600 mt-2" id="hs-validation-description">Please add the description of your folder</p>
-                  }
-                </div>
               </div>
               <!-- End Grid -->
             </div>
