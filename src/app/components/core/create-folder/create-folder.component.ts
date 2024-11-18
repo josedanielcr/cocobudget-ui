@@ -26,8 +26,6 @@ export class CreateFolderComponent implements AfterViewInit {
 
   //form controls
   readonly folderName: FormControl<string | null> = new FormControl('', [Validators.required]);
-  readonly folderDescription: FormControl<string | null> = new FormControl('', [Validators.required]);
-  folderDescriptionErrorMessage: WritableSignal<string> = signal('');
   folderNameErrorMessage: WritableSignal<string> = signal('');
 
 
@@ -44,9 +42,7 @@ export class CreateFolderComponent implements AfterViewInit {
   private setFormControls() {
     merge(
       this.folderName.statusChanges,
-      this.folderName.valueChanges,
-      this.folderDescription.statusChanges,
-      this.folderDescription.valueChanges
+      this.folderName.valueChanges
     )
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
@@ -56,15 +52,13 @@ export class CreateFolderComponent implements AfterViewInit {
 
   private updateErrorMessages() {
     this.folderNameErrorMessage.set(this.folderName.hasError('required') ? 'Folder name is required' : '');
-    this.folderDescriptionErrorMessage.set(this.folderDescription.hasError('required') ? 'Folder description is required' : '');
   }
 
   createFolder() {
-    if (this.folderName.invalid || this.folderDescription.invalid) {
+    if (this.folderName.invalid) {
       this.messageService.showToastMessage('Please fill in all required fields', ToastType.Error);
     }
-    const folderRequest : CreateFolderRequest = new CreateFolderRequest(this.folderName.value as string,
-      this.folderDescription.value as string, this.accountService.user()!.id as string);
+    const folderRequest : CreateFolderRequest = new CreateFolderRequest(this.folderName.value as string, this.accountService.user()!.id as string);
 
     this.executeFolderCreation(folderRequest);
 
@@ -75,7 +69,6 @@ export class CreateFolderComponent implements AfterViewInit {
       next: (result) => {
         this.messageService.showToastMessage('Folder created successfully', ToastType.Success);
         this.folderName.reset();
-        this.folderDescription.reset();
         this.close();
       },
       error: (error) => {
