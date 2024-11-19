@@ -32,16 +32,42 @@
     @if(folder.isActive){
       <div class="hs-accordion bg-white border -mt-px first:rounded-t-lg last:rounded-b-lg">
         <div class="flex items-center">
-          <button class="hs-accordion-toggle inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5
-      hover:text-gray-500 disabled:opacity-50 disabled:pointer-events-none" aria-expanded="false" aria-controls="hs-basic-bordered-collapse-two">
-            <svg class="hs-accordion-active:hidden block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button class="hs-accordion-toggle inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 py-4 px-5"
+                  aria-expanded="false" aria-controls="hs-basic-bordered-collapse-two" (click)="toggleFolder(folder.id)" [disabled]="!isInputDisabled(folder.id)">
+
+            <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [ngClass]="{
+                  'block' : !isFolderOpened(folder.id),
+                  'hidden' : isFolderOpened(folder.id)
+                 }">
               <path d="M5 12h14"></path>
               <path d="M12 5v14"></path>
             </svg>
-            <svg class="hs-accordion-active:block hidden size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [ngClass]="{
+                  'block' : isFolderOpened(folder.id),
+                  'hidden' : !isFolderOpened(folder.id)
+                 }">
               <path d="M5 12h14"></path>
             </svg>
-            {{ folder.name }}
+
+            <span [ngClass]="{
+              'hidden' : !isInputDisabled(folder.id),
+              'block' : isInputDisabled(folder.id),
+            }">{{ folder.name }}</span>
+            <span class="flex gap-2" [ngClass]="{
+              'hidden' : isInputDisabled(folder.id),
+              'block' : !isInputDisabled(folder.id),
+            }">
+                <input type="text" [value]="folder.name" [ngClass]="{
+                  'border-1 border-black rounded ps-1 focus:none' : !isInputDisabled(folder.id),
+                }" #updateInput [id]="folder.id">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(22, 163, 74)"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check cursor-pointer" (click)="updateFolder(folder)"><path d="M20 6 9 17l-5-5"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(239, 68, 68)" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" class="lucide lucide-x cursor-pointer" (click)="disableFolder(folder.id)"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </span>
           </button>
 
           <!--        actions-->
@@ -55,7 +81,7 @@
                           <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400">
                             Actions
                           </span>
-                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 cursor-pointer" (click)="updateFolder(folder)">
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 cursor-pointer" (click)="enableFolder(folder.id)">
                     Rename
                   </a>
                 </div>
@@ -71,6 +97,7 @@
         </div>
         <div class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-bordered-heading-two">
           <div class="pb-4 px-5">
+            content this is content of the content
           </div>
         </div>
       </div>
