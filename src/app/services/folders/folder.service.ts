@@ -73,7 +73,7 @@ export class FolderService {
   }
 
   public updateFolder(updateFolderReq : UpdateFolderRequest) : Observable<Result<Folder>>{
-    return this.httpClient.put(`${this._budgetServiceEndpoint}${this._folderServicePrefix}`, updateFolderReq)
+    return this.httpClient.patch(`${this._budgetServiceEndpoint}${this._folderServicePrefix}/${updateFolderReq.id}`, updateFolderReq)
       .pipe(
         map((response: any)=> {
           const folderResult = response as Result<Folder>;
