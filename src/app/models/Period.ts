@@ -4,7 +4,8 @@ import {PeriodLength} from './utils/PeriodLength';
 export class Period extends BaseClass {
   startDate: Date;
   endDate: Date;
-  length: PeriodLength;
+  lengthVal: PeriodLength | undefined;
+  length : number
   dayLength: number;
   userId: string;
   amountSpent: number;
@@ -14,7 +15,7 @@ export class Period extends BaseClass {
     id: string,
     startDate: Date,
     endDate: Date,
-    length: PeriodLength,
+    length: number,
     dayLength: number,
     userId: string,
     amountSpent: number,

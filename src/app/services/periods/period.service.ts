@@ -1,6 +1,6 @@
 import {effect, Injectable, signal, WritableSignal} from '@angular/core';
 import {CreatePeriodRequest} from '../../models/contracts/period/CreatePeriodRequest';
-import {map, Observable} from 'rxjs';
+import {map, Observable, Subscription} from 'rxjs';
 import {Result} from '../../shared/Result';
 import {Period} from '../../models/Period';
 import {HttpClient} from '@angular/common/http';
@@ -9,6 +9,8 @@ import {AccountService} from '../accounts/account.service';
 import {
   CreateExpiredPeriodComponent
 } from '../../components/core/create-expired-period/create-expired-period.component';
+import {MessageService} from '../utils/message.service';
+import {ToastType} from '../../models/Enums/ToastType.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +25,17 @@ export class PeriodService {
     const user = this.accountService.user();
     if (user) {
       this.managePeriodOnStart(user.id);
+      this.getActivePeriod().subscribe({
+        error : (error : Result<Period>) => {
+          this.activePeriod.update(() => null);
+        }
+      });
     }
   });
 
   constructor(private httpClient : HttpClient,
-              private accountService : AccountService) { }
+              private accountService : AccountService,
+              private messageService : MessageService) { }
 
   setCreatePeriodComponent(createPeriodComponent : CreateExpiredPeriodComponent){
     this.createPeriodComponent = createPeriodComponent;
@@ -64,16 +72,20 @@ export class PeriodService {
 
   private managePeriodOnStart(id: string) {
     this.validateIfPeriodActive(id).subscribe({
-      next : ()=> {
-        this.getActivePeriod().subscribe({
-          error : (error : Result<Period>) => {
-            this.activePeriod.update(() => null);
-          }
-        });
-      },
       error : (error : Result<Period>) => {
         this.createPeriodComponent?.open();
       }
     })
+  }
+
+  public clonePeriod(userId : string) {
+    return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/clone/${userId}`, {})
+      .pipe(
+        map((response: any)=> {
+          const period = response as Result<Period>;
+          this.activePeriod.update(() => period.value);
+          return period;
+        })
+      );
   }
 }
