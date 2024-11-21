@@ -9,13 +9,15 @@ import {ToastType} from '../../../models/Enums/ToastType.enum';
 import {FolderState} from './FolderState';
 import {NgClass} from '@angular/common';
 import {UpdateFolderRequest} from '../../../models/contracts/folder/UpdateFolderRequest';
+import {CategoryOverviewComponent} from '../category-overview/category-overview.component';
 
 @Component({
   selector: 'app-folders-overview',
   standalone: true,
   imports: [
     CreateFolderComponent,
-    NgClass
+    NgClass,
+    CategoryOverviewComponent
   ],
   templateUrl: './folders-overview.component.html',
   styleUrl: './folders-overview.component.css'
