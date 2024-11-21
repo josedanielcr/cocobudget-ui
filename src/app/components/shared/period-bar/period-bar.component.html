@@ -4,7 +4,7 @@
     <!-- Start Date -->
     <span class="text-sm text-gray-600">{{ periodService.activePeriod()?.startDate | date: 'MMM d, y' }}</span>
     <!-- Progress Percentage -->
-    <div class="inline-block py-0.5 px-1.5 bg-blue-50 border border-blue-200 text-xs font-medium text-blue-600 rounded-lg">
+    <div class="inline-block py-0.5 px-1.5 border border-secondary-100 text-xs font-medium text-white rounded-lg bg-secondary-100">
       {{ calculateRemainingDays() }} days left
     </div>
     <!-- End Date -->
@@ -12,7 +12,7 @@
   </div>
   <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" [attr.aria-valuenow]="calculateProgress()" aria-valuemin="0" aria-valuemax="100">
     <div
-      class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500"
+      class="flex flex-col justify-center rounded-full overflow-hidden bg-primary-100 text-xs text-white text-center whitespace-nowrap transition duration-500"
       [ngStyle]="{ width: calculateProgress() + '%' }"
     ></div>
   </div>
