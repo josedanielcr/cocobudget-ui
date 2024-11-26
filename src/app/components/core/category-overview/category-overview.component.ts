@@ -1,23 +1,23 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import {Category} from '../../../models/Category';
-import {HSOverlay} from 'preline/preline';
+import {CreateCategoryComponent} from '../create-category/create-category.component';
+import {CategoryLearnInfoComponent} from '../../shared/category-learn-info/category-learn-info.component';
 
 @Component({
   selector: 'app-category-overview',
   standalone: true,
-  imports: [],
+  imports: [
+    CreateCategoryComponent,
+    CategoryLearnInfoComponent
+  ],
   templateUrl: './category-overview.component.html',
   styleUrl: './category-overview.component.css'
 })
 export class CategoryOverviewComponent {
 
-  @ViewChild('learnMoreModal') learnMoreModal : ElementRef | undefined;
   @Input() categories : Category[] | undefined = [];
+  @Input() folderId : string | undefined;
 
   constructor() {
-  }
-
-  openLearnMoreModal() {
-    HSOverlay.open(this.learnMoreModal?.nativeElement);
   }
 }
