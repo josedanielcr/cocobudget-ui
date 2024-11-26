@@ -10,7 +10,6 @@ import {
   CreateExpiredPeriodComponent
 } from '../../components/core/create-expired-period/create-expired-period.component';
 import {MessageService} from '../utils/message.service';
-import {ToastType} from '../../models/Enums/ToastType.enum';
 
 @Injectable({
   providedIn: 'root'
