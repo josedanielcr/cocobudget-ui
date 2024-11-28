@@ -1,16 +1,19 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
-import {CurrencyService} from '../../../services/utils/currency.service';
+import {Component, Input} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
-import {merge} from 'rxjs';
+import {CategoryType} from '../../../models/Enums/CategoryType.enum';
+import {EnumArray} from '../../../models/utils/EnumArray';
+import {CurrencyPipe, NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-create-category',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgClass
   ],
   templateUrl: './create-category.component.html',
-  styleUrl: './create-category.component.css'
+  styleUrl: './create-category.component.css',
+  providers: [CurrencyPipe]
 })
 export class CreateCategoryComponent {
 
@@ -21,44 +24,84 @@ export class CreateCategoryComponent {
   readonly categoryType: FormControl<string | null> = new FormControl('', [Validators.required]);
   readonly currency: FormControl<string | null> = new FormControl('', [Validators.required]);
   readonly finalDate : FormControl<string | null> = new FormControl(new Date().toISOString().split('T')[0]);
-  readonly generalTargetAmount : FormControl<number | null> = new FormControl(0);
-  readonly targetAmount : FormControl<number | null> = new FormControl(0);
-  nameErrorMessage: WritableSignal<string> = signal('');
-  categoryTypeErrorMessage: WritableSignal<string> = signal('');
-  currencyErrorMessage: WritableSignal<string> = signal('');
-  finalDateErrorMessage: WritableSignal<string> = signal('');
-  generalTargetAmountErrorMessage: WritableSignal<string> = signal('');
-  targetAmountErrorMessage: WritableSignal<string> = signal('');
+  readonly generalTargetAmount : FormControl<string | null> = new FormControl('', [Validators.required]);
+  readonly targetAmount : FormControl<string | null> = new FormControl('', [Validators.required]);
 
-  constructor(/*public currencyService : CurrencyService*/) {
-    this.mergeFormControls();
+  // utils
+  public categoryTypes : EnumArray[]  = this.createCategoryTypeArr();
+  protected readonly CategoryType = CategoryType;
+  public readonly today: string;
+
+  constructor(/*public currencyService : CurrencyService*/
+              private currencyPipe : CurrencyPipe) {
+    this.today = new Date().toISOString().split('T')[0];
   }
 
   createCategory() {
+    this.clearForm();
   }
 
-  private mergeFormControls() {
-    merge(
-      this.name.statusChanges,
-      this.name.valueChanges,
-      this.categoryType.statusChanges,
-      this.categoryType.valueChanges,
-      this.currency.statusChanges,
-      this.currency.valueChanges,
-      this.generalTargetAmount.statusChanges,
-      this.generalTargetAmount.valueChanges,
-      this.targetAmount.statusChanges,
-      this.targetAmount.valueChanges
-    ).subscribe(() => {
-      this.updateErrorMessages();
-    });
+  private createCategoryTypeArr() : EnumArray[] {
+    let categoryTypes : EnumArray[] = [];
+    for (let categoryType in CategoryType) {
+      if (isNaN(Number(categoryType))) {
+        categoryTypes.push({value: CategoryType[categoryType], name: categoryType});
+      }
+    }
+    return categoryTypes;
   }
 
-  private updateErrorMessages() {
-    this.nameErrorMessage.set(this.name.hasError('required') ? 'Name is required' : '');
-    this.categoryTypeErrorMessage.set(this.categoryType.hasError('required') ? 'Category type is required' : '');
-    this.currencyErrorMessage.set(this.currency.hasError('required') ? 'Currency is required' : '');
-    this.generalTargetAmountErrorMessage.set(this.generalTargetAmount.hasError('required') ? 'General target amount is required' : '');
-    this.targetAmountErrorMessage.set(this.targetAmount.hasError('required') ? 'Target amount is required' : '');
+  formatGeneralAmountValue(): void {
+    this.formatAmountValue(this.generalTargetAmount);
+  }
+
+  formatTargetAmountValue(): void {
+    this.formatAmountValue(this.targetAmount);
+  }
+
+  onInputGeneralTargetChange(event: Event): void {
+    this.onInputChange(event, this.generalTargetAmount);
+  }
+
+  onInputTargetChange(event: Event): void {
+    this.onInputChange(event, this.targetAmount);
+  }
+
+  onInputChange(event: Event, formControl: FormControl): void {
+    const rawValue = this.sanitizeCurrencyInput(event);
+
+    if (this.isNumericValue(rawValue)) {
+      formControl.setValue(rawValue);
+    }
+  }
+
+  private sanitizeCurrencyInput(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;
+    return inputValue.replace(/[\$,]/g, '');
+  }
+
+  isNumericValue(value: string | number): boolean {
+    return !isNaN(+value);
+  }
+
+  private formatAsCurrency(value: string | number): string {
+    return this.currencyPipe.transform(value, '', '', '1.2-2') || '';
+  }
+
+  formatAmountValue(formControl: FormControl): void {
+    const rawValue = formControl.value;
+    if (rawValue && this.isNumericValue(rawValue)) {
+      const formatted = this.formatAsCurrency(rawValue);
+      formControl.setValue(formatted, { emitEvent: false });
+    }
+  }
+
+  private clearForm() {
+    this.name.reset();
+    this.categoryType.setValue('');
+    this.currency.setValue('');
+    this.finalDate.reset();
+    this.generalTargetAmount.reset();
+    this.targetAmount.reset();
   }
 }

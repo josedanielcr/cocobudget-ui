@@ -12,12 +12,12 @@ export class CurrencyService {
 
   private readonly _budgetServiceEndpoint = environment.budgetService;
   private readonly _currencyServicePrefix = 'currency';
-  currency : WritableSignal<Currency | null> =  signal<Currency | null>(null);
+  currencies : WritableSignal<Currency | null> =  signal<Currency | null>(null);
   private currencyEffect = effect(() => {
     this.getCurrency().subscribe({
       next : (result : Result<Currency>) => {
         if (result.value) {
-          this.currency.update(() => result.value);
+          this.currencies.update(() => result.value);
         }
       }
     });
