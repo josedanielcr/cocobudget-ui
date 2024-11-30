@@ -83,6 +83,27 @@
               <label class="inline-block text-sm font-medium">
                 Budget Allocation
               </label>
+
+              @if(categoryType.value == CategoryType.Fixed.toString() && categoryType.value != null){
+                <p class="text-xs text-gray-500">By selecting the "Fixed" type, you set a consistent amount to be spent every period. This is ideal for recurring expenses like your internet or phone bill.</p>
+              }
+
+              @if(categoryType.value == CategoryType.Custom.toString() && categoryType.value != null){
+                <p class="text-xs text-gray-500 mb-1">
+                  The "Custom" type is ideal for larger expenses that you want to divide across multiple periods. For example, if you're saving up for a $1,200 laptop, you can create a custom category
+                  specifically for it. <br>
+                </p>
+                <p class="mb-1 text-xs text-gray-500">You have two options:</p>
+                <div class="mb-1">
+                  <ol class="list-decimal text-xs list-inside text-gray-500">
+                    <li> <span class="font-bold">Manually set</span>how much to allocate each period.</li>
+                    <li> <span class="font-bold">Set a final date</span>, and Cocobudget will calculate the amount you need to allocate per period to stay on track.</li>
+                  </ol>
+                </div>
+              }
+
+              <p class="text-xs text-gray-500"></p>
+
               <div class="mt-2 space-y-3">
                 <input id="af-general-target-amount"
                        type="text"
@@ -97,19 +118,29 @@
             </div>
 
             @if(categoryType.value == CategoryType.Custom.toString() && categoryType.value != null){
-              <div class="flex justify-between items-center">
-                <label class="block text-sm font-medium mb-2"></label>
-                <span class="block mb-2 text-sm text-gray-500">Final Date (Optional)</span>
+
+              <div class="flex">
+                <input type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-primary-400
+                focus:ring-primary-400 disabled:opacity-50 disabled:pointer-events-none" id="hs-checked-checkbox" [formControl]="isFinalDateNeeded">
+                <label for="hs-checked-checkbox" class="text-sm text-gray-500 ms-3">
+                  Do you want to set a final date? (If unchecked, you can manually set the amount for each period.)
+                </label>
               </div>
-              <input id="af-final-date"
-                     type="date"
-                     class="border-1 py-2 px-3 block w-full
+
+              @if(isFinalDateNeeded.value == true) {
+                <div class="flex justify-between items-center">
+                  <label class="block text-sm font-medium mb-2"></label>
+                  <span class="block mb-2 text-sm text-gray-500">Final Date (Optional)</span>
+                </div>
+                <input id="af-final-date"
+                       type="date"
+                       class="border-1 py-2 px-3 block w-full
                        border-gray-200 shadow-sm text-sm rounded-lg focus:border-primary-400
                        focus:ring-primary-400 disabled:opacity-50 disabled:pointer-events-none"
-                     [formControl]="finalDate"
-                     [min]="today">
-
-              @if(finalDate.value == today || finalDate.value == ''){
+                       [formControl]="finalDate"
+                       [min]="today">
+              }
+              @if(isFinalDateNeeded.value == false) {
                 <hr class="mt-6 mb-6">
                 <div class="mt-2 space-y-3">
                   <input id="af-target-amount"
@@ -125,8 +156,6 @@
               }
             }
           </form>
-
-
         </div>
       </div>
 
