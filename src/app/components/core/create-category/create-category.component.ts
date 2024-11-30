@@ -26,6 +26,7 @@ export class CreateCategoryComponent {
   readonly finalDate : FormControl<string | null> = new FormControl(new Date().toISOString().split('T')[0]);
   readonly generalTargetAmount : FormControl<string | null> = new FormControl('', [Validators.required]);
   readonly targetAmount : FormControl<string | null> = new FormControl('', [Validators.required]);
+  readonly isFinalDateNeeded : FormControl<boolean | null> = new FormControl(false);
 
   // utils
   public categoryTypes : EnumArray[]  = this.createCategoryTypeArr();
