@@ -1,8 +1,15 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CategoryType} from '../../../models/Enums/CategoryType.enum';
 import {EnumArray} from '../../../models/utils/EnumArray';
 import {CurrencyPipe, NgClass} from '@angular/common';
+import {MessageService} from '../../../services/utils/message.service';
+import {ToastType} from '../../../models/Enums/ToastType.enum';
+import {CategoryService} from '../../../services/categories/category.service';
+import {CreateCategoryRequest} from '../../../models/contracts/categories/CreateCategoryRequest';
+import {Category} from '../../../models/Category';
+import {Result} from '../../../shared/Result';
+import {AccountService} from '../../../services/accounts/account.service';
 
 @Component({
   selector: 'app-create-category',
@@ -17,6 +24,7 @@ import {CurrencyPipe, NgClass} from '@angular/common';
 })
 export class CreateCategoryComponent {
 
+  @ViewChild('createCategoryButton', { static : false}) createCategoryButton : ElementRef | undefined;
   @Input() folderId : string | undefined;
 
   //form elements
@@ -34,12 +42,11 @@ export class CreateCategoryComponent {
   public readonly today: string;
 
   constructor(/*public currencyService : CurrencyService*/
-              private currencyPipe : CurrencyPipe) {
+              private currencyPipe : CurrencyPipe,
+              private messageService : MessageService,
+              private categoryService : CategoryService,
+              private accountService : AccountService) {
     this.today = new Date().toISOString().split('T')[0];
-  }
-
-  createCategory() {
-    this.clearForm();
   }
 
   private createCategoryTypeArr() : EnumArray[] {
@@ -50,6 +57,12 @@ export class CreateCategoryComponent {
       }
     }
     return categoryTypes;
+  }
+
+  triggerButtonClick() {
+    if (this.createCategoryButton) {
+      this.createCategoryButton.nativeElement.click();
+    }
   }
 
   formatGeneralAmountValue(): void {
@@ -97,6 +110,15 @@ export class CreateCategoryComponent {
     }
   }
 
+  createCategory() {
+    const [result, message] = this.createCategoryValidations();
+    if(!result){
+      this.messageService.showToastMessage(message, ToastType.Error);
+      return;
+    }
+    this.createCategoryReq();
+  }
+
   private clearForm() {
     this.name.reset();
     this.categoryType.setValue('');
@@ -104,5 +126,78 @@ export class CreateCategoryComponent {
     this.finalDate.reset();
     this.generalTargetAmount.reset();
     this.targetAmount.reset();
+  }
+
+
+  private createCategoryValidations(): [boolean, string]  {
+    if (this.name.invalid || this.currency.invalid || this.categoryType.invalid) {
+      return [false, 'You must add all the general information'];
+    }
+    if(this.categoryType.invalid){
+      return [false, 'You must select a category type'];
+    }
+
+    if(this.generalTargetAmount.invalid){
+      return [false, 'You must add your target amount'];
+    }
+
+    if(this.categoryType.value == this.CategoryType.Fixed.toString()){
+      return [true, ''];
+    }
+
+    if(this.isFinalDateNeeded.value === true && this.finalDate.value == null){
+      return [false, 'You must select a final date'];
+    }
+
+    const finalDate = new Date(this.finalDate.value as string);
+    const today = new Date(this.today);
+
+    if(this.isFinalDateNeeded.value === true && finalDate <= today){
+      return [false, 'You must select a final date that is different from today'];
+    }
+    return [true, ''];
+  }
+
+  private createCategoryReq() {
+    const createCategoryRequest = this.createCategoryRequest();
+    this.categoryService.createCategory(createCategoryRequest).subscribe({
+      next: (result : Result<Category>) => {
+        this.messageService.showToastMessage('Category created successfully', ToastType.Success);
+        this.clearForm();
+        this.triggerButtonClick(); // close modal
+      },
+      error: (error: Result<Category>) => {
+        this.messageService.showToastMessage(error.error.message, ToastType.Error);
+      }
+    });
+  }
+
+  private createCategoryRequest() : CreateCategoryRequest {
+    let req = new CreateCategoryRequest();
+    req.name = (this.name.value as string);
+    req.currency = (this.currency.value as string);
+    req.generalTargetAmount = Number(this.generalTargetAmount.value);
+    req.userId = this.accountService.user()?.id;
+    req.folderId = this.folderId;
+    if(this.categoryType.value === this.CategoryType.Custom.toString()) return this.createCustomCreateCategoryRequest(req);
+    else return this.createFixedCreateCategoryRequest(req);
+  }
+
+  private createCustomCreateCategoryRequest(req : CreateCategoryRequest) : CreateCategoryRequest {
+    req.categoryType = CategoryType.Custom;
+    if(this.isFinalDateNeeded.value === false){
+      req.finalDate = undefined;
+      req.targetAmount = Number(this.targetAmount.value);
+      return req;
+    }
+    req.finalDate = new Date(this.finalDate.value as string);
+    req.targetAmount = undefined;
+    return req;
+  }
+
+  private createFixedCreateCategoryRequest(req : CreateCategoryRequest) : CreateCategoryRequest {
+    req.categoryType = CategoryType.Fixed;
+    req.finalDate = undefined;
+    return req;
   }
 }
