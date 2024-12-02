@@ -25,7 +25,13 @@ export class CategoryService {
         map((response: any) => {
           const category = (response as Result<Category>).value;
           if (category) {
-            //this.folderService.updateFolderCategories(category.folderId, category);
+            const folders = this.folderService.folders();
+            folders?.forEach(folder => {
+              if (folder.id === category.folderId) {
+                folder.categories = folder.categories ? [...folder.categories, category] : [category];
+              }
+            });
+            this.folderService.folders.update(value => folders);
           }
           return response as Result<Category>;
         })
