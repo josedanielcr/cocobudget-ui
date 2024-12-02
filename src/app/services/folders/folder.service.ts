@@ -7,6 +7,7 @@ import {CreateFolderRequest} from '../../models/contracts/folder/CreateFolderReq
 import {map, Observable} from 'rxjs';
 import {Result} from '../../shared/Result';
 import {UpdateFolderRequest} from '../../models/contracts/folder/UpdateFolderRequest';
+import {Category} from '../../models/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,13 @@ export class FolderService {
 
   constructor(private httpClient : HttpClient,
               private accountService : AccountService) { }
+
+  public updateFolderCategories(category : Category){
+    const folder = this.folders()?.find(folder => folder.id === category.folderId);
+    if(!folder) return;
+    folder.categories = folder.categories ? [...folder.categories, category] : [category];
+
+  }
 
   public createFolder(createFolderRequest : CreateFolderRequest) : Observable<Result<Folder>>{
     return this.httpClient.post(`${this._budgetServiceEndpoint}${this._folderServicePrefix}`, createFolderRequest)
