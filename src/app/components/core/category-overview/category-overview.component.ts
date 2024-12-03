@@ -3,13 +3,15 @@ import {Category} from '../../../models/Category';
 import {CreateCategoryComponent} from '../create-category/create-category.component';
 import {CategoryLearnInfoComponent} from '../../shared/category-learn-info/category-learn-info.component';
 import {CurrencyPipe} from '@angular/common';
+import {CategoryDetailsComponent} from '../category-details/category-details.component';
 
 @Component({
   selector: 'app-category-overview',
   standalone: true,
   imports: [
     CreateCategoryComponent,
-    CategoryLearnInfoComponent
+    CategoryLearnInfoComponent,
+    CategoryDetailsComponent
   ],
   templateUrl: './category-overview.component.html',
   styleUrl: './category-overview.component.css',
