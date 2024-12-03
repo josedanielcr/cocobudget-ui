@@ -10,6 +10,7 @@ import {FolderState} from './FolderState';
 import {NgClass} from '@angular/common';
 import {UpdateFolderRequest} from '../../../models/contracts/folder/UpdateFolderRequest';
 import {CategoryOverviewComponent} from '../category-overview/category-overview.component';
+import {CreateCategoryComponent} from '../create-category/create-category.component';
 
 @Component({
   selector: 'app-folders-overview',
@@ -17,7 +18,8 @@ import {CategoryOverviewComponent} from '../category-overview/category-overview.
   imports: [
     CreateFolderComponent,
     NgClass,
-    CategoryOverviewComponent
+    CategoryOverviewComponent,
+    CreateCategoryComponent
   ],
   templateUrl: './folders-overview.component.html',
   styleUrl: './folders-overview.component.css'
