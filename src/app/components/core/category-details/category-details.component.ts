@@ -29,4 +29,9 @@ export class CategoryDetailsComponent {
   constructor(private folderService : FolderService) {}
 
   protected readonly CategoryType = CategoryType;
+
+  getLocateDateString(finalDate: Date | undefined) {
+    const date = new Date(finalDate || '');
+    return date.toLocaleDateString();
+  }
 }
