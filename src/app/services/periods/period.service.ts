@@ -87,4 +87,14 @@ export class PeriodService {
         })
       );
   }
+
+  public calculateRemainingDays() : number {
+    if (this.activePeriod()) {
+      const now = new Date();
+      const endDate = new Date(this.activePeriod()?.endDate as Date);
+      const total = endDate.getTime() - now.getTime();
+      return Math.ceil(total / (1000 * 60 * 60 * 24));
+    }
+    return 0;
+  }
 }

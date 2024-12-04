@@ -5,7 +5,7 @@
     <span class="text-sm text-gray-600">{{ periodService.activePeriod()?.startDate | date: 'MMM d, y' }}</span>
     <!-- Progress Percentage -->
     <div class="inline-block py-0.5 px-1.5 border border-secondary-100 text-xs font-medium text-white rounded-lg bg-secondary-100">
-      {{ calculateRemainingDays() }} days left
+      {{ periodService.calculateRemainingDays() }} days left
     </div>
     <!-- End Date -->
     <span class="text-sm text-gray-600">{{ periodService.activePeriod()?.endDate | date: 'MMM d, y' }}</span>

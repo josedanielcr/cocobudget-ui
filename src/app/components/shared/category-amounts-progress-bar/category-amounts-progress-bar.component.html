@@ -1,0 +1,18 @@
+<h4 class="text-xs font-semibold uppercase text-gray-800">Progress</h4>
+<div class="flex justify-between mb-2 mt-3">
+  <span class="text-sm text-gray-600">0.00 {{currency}}</span>
+  <div class="inline-block py-0.5 px-1.5 border border-secondary-100 text-xs font-medium text-white rounded-lg bg-secondary-100">
+    @if(amountSpent && amountSpent > 0){
+      {{amountSpent | customCurrencyPipe}} {{currency}}
+    } @else {
+      No expenses yet
+    }
+  </div>
+  <span class="text-sm text-gray-600">{{targetAmount | customCurrencyPipe}} {{currency}}</span>
+</div>
+<div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="calculateProgress()">
+  <div
+    class="flex flex-col justify-center rounded-full overflow-hidden bg-primary-100 text-xs text-white text-center whitespace-nowrap transition duration-500"
+    [ngStyle]="{ width: calculateProgress() + '%' }"
+  ></div>
+</div>
