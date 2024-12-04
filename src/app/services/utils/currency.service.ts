@@ -25,7 +25,6 @@ export class CurrencyService {
 
   constructor(private httpClient : HttpClient) { }
 
-
   public getCurrency() : Observable<Result<Currency>>{
     return this.httpClient.get(`${this._budgetServiceEndpoint}${this._currencyServicePrefix}/codes`)
       .pipe(

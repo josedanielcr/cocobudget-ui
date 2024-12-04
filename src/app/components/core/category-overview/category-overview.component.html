@@ -90,21 +90,21 @@
                 <td class="size-px whitespace-nowrap">
                   <div class="px-6 py-3">
                      <span class="text-sm text-gray-600">
-                       {{this.formatCurrency(category.targetAmount)}}
+                       {{category.targetAmount | customCurrencyPipe}} {{category.generalCategory.currency}}
                     </span>
                   </div>
                 </td>
                 <td class="size-px whitespace-nowrap">
                   <div class="px-6 py-3">
                      <span class="text-sm text-gray-600">
-                       {{this.formatCurrency(category.amountSpent)}}
+                       {{category.amountSpent | customCurrencyPipe}} {{category.generalCategory.currency}}
                     </span>
                   </div>
                 </td>
                 <td class="size-px whitespace-nowrap">
                   <div class="px-6 py-3">
                      <span class="text-sm text-gray-600">
-                        {{this.formatCurrency(category.amountRemaining)}}
+                        {{category.amountRemaining | customCurrencyPipe}} {{category.generalCategory.currency}}
                     </span>
                   </div>
                 </td>

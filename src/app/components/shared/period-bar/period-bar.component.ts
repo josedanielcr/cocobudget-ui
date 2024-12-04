@@ -14,9 +14,7 @@ import {DatePipe, NgStyle} from '@angular/common';
 })
 export class PeriodBarComponent {
 
-
-  constructor(public periodService : PeriodService) {
-  }
+  constructor(public periodService : PeriodService) {}
 
   calculateProgress(): number {
     if (this.periodService.activePeriod()) {
@@ -26,16 +24,6 @@ export class PeriodBarComponent {
       const total = endDate.getTime() - startDate.getTime();
       const progress = now.getTime() - startDate.getTime();
       return Math.floor(progress / total * 100);
-    }
-    return 0;
-  }
-
-  calculateRemainingDays(): number {
-    if (this.periodService.activePeriod()) {
-      const now = new Date();
-      const endDate = new Date(this.periodService.activePeriod()?.endDate as Date);
-      const total = endDate.getTime() - now.getTime();
-      return Math.ceil(total / (1000 * 60 * 60 * 24));
     }
     return 0;
   }

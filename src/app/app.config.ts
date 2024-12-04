@@ -13,9 +13,11 @@ import {
   MsalService
 } from '@azure/msal-angular';
 import {MSALGuardConfigFactory, MSALInstanceFactory, MSALInterceptorConfigFactory} from './app.factory';
+import {CurrencyPipe} from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    CurrencyPipe, // format values across the app
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     importProvidersFrom(

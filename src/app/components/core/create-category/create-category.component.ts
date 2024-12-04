@@ -176,7 +176,7 @@ export class CreateCategoryComponent {
     let req = new CreateCategoryRequest();
     req.name = (this.name.value as string);
     req.currency = (this.currency.value as string);
-    req.generalTargetAmount = Number(this.generalTargetAmount.value);
+    req.generalTargetAmount = parseFloat(this.generalTargetAmount.value?.replace(/,/g, "") as string);
     req.userId = this.accountService.user()?.id;
     req.folderId = this.folderId;
     if(this.categoryType.value === this.CategoryType.Custom.toString()) return this.createCustomCreateCategoryRequest(req);
@@ -187,7 +187,7 @@ export class CreateCategoryComponent {
     req.categoryType = CategoryType.Custom;
     if(this.isFinalDateNeeded.value === false){
       req.finalDate = undefined;
-      req.targetAmount = Number(this.targetAmount.value);
+      req.targetAmount = parseFloat(this.targetAmount.value?.replace(/,/g, "") as string);
       return req;
     }
     req.finalDate = new Date(this.finalDate.value as string);

@@ -1,11 +1,16 @@
 import {Component, effect, Input} from '@angular/core';
 import {Category} from '../../../models/Category';
 import {FolderService} from '../../../services/folders/folder.service';
+import {CustomCurrencyPipePipe} from '../../../pipes/custom-currency-pipe.pipe';
+import {
+  CategoryAmountsProgressBarComponent
+} from '../../shared/category-amounts-progress-bar/category-amounts-progress-bar.component';
+import {CategoryType} from '../../../models/Enums/CategoryType.enum';
 
 @Component({
   selector: 'app-category-details',
   standalone: true,
-  imports: [],
+  imports: [CustomCurrencyPipePipe, CategoryAmountsProgressBarComponent],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.css'
 })
@@ -22,4 +27,6 @@ export class CategoryDetailsComponent {
   });
 
   constructor(private folderService : FolderService) {}
+
+  protected readonly CategoryType = CategoryType;
 }
