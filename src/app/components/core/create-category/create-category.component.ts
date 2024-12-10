@@ -10,6 +10,7 @@ import {CreateCategoryRequest} from '../../../models/contracts/categories/Create
 import {Category} from '../../../models/Category';
 import {Result} from '../../../shared/Result';
 import {AccountService} from '../../../services/accounts/account.service';
+import {PrelineService} from '../../../services/utils/preline.service';
 
 @Component({
   selector: 'app-create-category',
@@ -164,7 +165,7 @@ export class CreateCategoryComponent {
       next: (result : Result<Category>) => {
         this.messageService.showToastMessage('Category created successfully', ToastType.Success);
         this.clearForm();
-        this.triggerButtonClick(); // close modal
+        this.triggerButtonClick();
       },
       error: (error: Result<Category>) => {
         this.messageService.showToastMessage(error.error.message, ToastType.Error);
