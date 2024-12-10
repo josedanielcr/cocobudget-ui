@@ -1,7 +1,16 @@
-import {AfterViewInit, Component, effect, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  effect,
+  ElementRef,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {FolderService} from '../../../services/folders/folder.service';
 import {CreateFolderComponent} from '../create-folder/create-folder.component';
-import {HSAccordion} from 'preline/preline';
+import {HSAccordion, HSOverlay} from 'preline/preline';
 import {Folder} from '../../../models/Folder';
 import {Result} from '../../../shared/Result';
 import {MessageService} from '../../../services/utils/message.service';
@@ -24,7 +33,7 @@ import {CreateCategoryComponent} from '../create-category/create-category.compon
   templateUrl: './folders-overview.component.html',
   styleUrl: './folders-overview.component.css'
 })
-export class FoldersOverviewComponent {
+export class FoldersOverviewComponent implements AfterViewChecked{
 
   @ViewChild('accordion') accordion: ElementRef | undefined;
   @ViewChildren('updateInput') updateInputs: QueryList<ElementRef> | undefined;
@@ -46,6 +55,13 @@ export class FoldersOverviewComponent {
   constructor(public foldersService : FolderService,
               private messageService : MessageService) {
     this.onFolderSignalChange();
+  }
+
+  //necessary to reinit PrelineUI components after some content of folders is changed to prevent things to not work properly
+  ngAfterViewChecked(): void {
+    window.HSStaticMethods.autoInit('overlay');
+    window.HSStaticMethods.autoInit('accordion');
+    window.HSStaticMethods.autoInit('select');
   }
 
   isInputDisabled(folderId : string) {
