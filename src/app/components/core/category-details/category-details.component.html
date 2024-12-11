@@ -13,7 +13,7 @@ translate-x-full fixed top-0 end-0 transition-all duration-300 transform h-full
 max-w-2xl w-full z-[80] bg-white border-e" role="dialog" tabindex="-1" aria-labelledby="hs-ai-offcanvas-label">
   <div class="relative overflow-hidden min-h-32 text-center bg-[url('https://preline.co/assets/svg/examples/abstract-bg-1.svg')] bg-no-repeat bg-center">
     <!-- Close Button -->
-    <div class="absolute top-2 end-2">
+    <div class="absolute top-2 end-2 z-10">
       <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100
       text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
               aria-label="Close" [attr.data-hs-overlay]="'#hs-ai-offcanvas-'+category?.id">
@@ -104,10 +104,12 @@ max-w-2xl w-full z-[80] bg-white border-e" role="dialog" tabindex="-1" aria-labe
         </div>
         <!-- End Col -->
 
-        <div>
-          <span class="block text-xs uppercase text-gray-500">Estimated finish date:</span>
-          <span class="block text-sm font-medium text-gray-800">{{getLocateDateString(category?.generalCategory!.finalDate)}}</span>
-        </div>
+        @if(category!.generalCategory.finalDate !== null) {
+          <div>
+            <span class="block text-xs uppercase text-gray-500">Estimated finish date:</span>
+            <span class="block text-sm font-medium text-gray-800">{{getLocateDateString(category?.generalCategory!.finalDate)}}</span>
+          </div>
+        }
         <!-- End Col -->
       </div>
     }
@@ -131,12 +133,6 @@ max-w-2xl w-full z-[80] bg-white border-e" role="dialog" tabindex="-1" aria-labe
 
     <!-- Button -->
     <div class="mt-5 flex justify-end gap-x-2">
-      <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" class="shrink-0 size-4"><path d="M12 20h9"/>
-          <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg>
-        Modify
-      </a>
       <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border
       border-transparent bg-error text-white focus:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer" (click)="deleteCategory()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

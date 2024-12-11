@@ -11,11 +11,12 @@ import {MessageService} from '../../../services/utils/message.service';
 import {Result} from '../../../shared/Result';
 import {ToastType} from '../../../models/Enums/ToastType.enum';
 import {HSOverlay} from 'preline/preline';
+import {UpdateCategoryComponent} from '../update-category/update-category.component';
 
 @Component({
   selector: 'app-category-details',
   standalone: true,
-  imports: [CustomCurrencyPipePipe, CategoryAmountsProgressBarComponent],
+  imports: [CustomCurrencyPipePipe, CategoryAmountsProgressBarComponent, UpdateCategoryComponent],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.css'
 })

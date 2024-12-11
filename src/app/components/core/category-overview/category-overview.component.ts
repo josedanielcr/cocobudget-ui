@@ -4,16 +4,18 @@ import {CreateCategoryComponent} from '../create-category/create-category.compon
 import {CategoryLearnInfoComponent} from '../../shared/category-learn-info/category-learn-info.component';
 import {CategoryDetailsComponent} from '../category-details/category-details.component';
 import {CustomCurrencyPipePipe} from '../../../pipes/custom-currency-pipe.pipe';
+import {UpdateCategoryComponent} from "../update-category/update-category.component";
 
 @Component({
   selector: 'app-category-overview',
   standalone: true,
-  imports: [
-    CreateCategoryComponent,
-    CategoryLearnInfoComponent,
-    CategoryDetailsComponent,
-    CustomCurrencyPipePipe
-  ],
+    imports: [
+        CreateCategoryComponent,
+        CategoryLearnInfoComponent,
+        CategoryDetailsComponent,
+        CustomCurrencyPipePipe,
+        UpdateCategoryComponent
+    ],
   templateUrl: './category-overview.component.html',
   styleUrl: './category-overview.component.css'
 })
