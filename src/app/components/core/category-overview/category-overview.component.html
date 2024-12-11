@@ -70,7 +70,7 @@
               <th scope="col" class="px-6 py-3 text-start">
                 <div class="flex items-center gap-x-2">
                   <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                    Details
+                    Actions
                   </span>
                 </div>
               </th>
@@ -111,6 +111,7 @@
                 <td class="size-px whitespace-nowrap">
                   <div class="px-6 py-1.5 flex items-center gap-2">
                     <app-category-details [category]="category"></app-category-details>
+                    <app-update-category [category]="category"></app-update-category>
                   </div>
                 </td>
               </tr>

@@ -11,6 +11,7 @@ import {Category} from '../../../models/Category';
 import {Result} from '../../../shared/Result';
 import {AccountService} from '../../../services/accounts/account.service';
 import {PrelineService} from '../../../services/utils/preline.service';
+import {EnumsService} from '../../../services/utils/enums.service';
 
 @Component({
   selector: 'app-create-category',
@@ -27,6 +28,7 @@ export class CreateCategoryComponent {
 
   @ViewChild('createCategoryButton', { static : false}) createCategoryButton : ElementRef | undefined;
   @Input() folderId : string | undefined;
+  @Input() isIcon : boolean = false;
 
   //form elements
   readonly name: FormControl<string | null> = new FormControl('', [Validators.required]);
@@ -38,7 +40,7 @@ export class CreateCategoryComponent {
   readonly isFinalDateNeeded : FormControl<boolean | null> = new FormControl(false);
 
   // utils
-  public categoryTypes : EnumArray[]  = this.createCategoryTypeArr();
+  public categoryTypes : EnumArray[] | undefined;
   protected readonly CategoryType = CategoryType;
   public readonly today: string;
 
@@ -46,18 +48,14 @@ export class CreateCategoryComponent {
               private currencyPipe : CurrencyPipe,
               private messageService : MessageService,
               private categoryService : CategoryService,
-              private accountService : AccountService) {
+              private accountService : AccountService,
+              private enumService : EnumsService) {
     this.today = new Date().toISOString().split('T')[0];
+    this.categoryTypes = this.createCategoryTypeArr();
   }
 
   private createCategoryTypeArr() : EnumArray[] {
-    let categoryTypes : EnumArray[] = [];
-    for (let categoryType in CategoryType) {
-      if (isNaN(Number(categoryType))) {
-        categoryTypes.push({value: CategoryType[categoryType], name: categoryType});
-      }
-    }
-    return categoryTypes;
+    return this.enumService.createEnumArray(CategoryType);
   }
 
   triggerButtonClick() {
