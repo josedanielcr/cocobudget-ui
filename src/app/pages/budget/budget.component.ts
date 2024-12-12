@@ -31,4 +31,11 @@ export class BudgetComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     this.periodService.setCreatePeriodComponent(this.createExpiredPeriodComponent as CreateExpiredPeriodComponent);
   }
+
+  areFoldersAvailable() : boolean {
+    if(this.folderService.folders()?.length === 0) return false;
+    else {
+      return this.folderService.folders()!.filter(folder => folder.isActive).length > 0;
+    }
+  }
 }
