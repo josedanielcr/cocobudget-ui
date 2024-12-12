@@ -24,6 +24,7 @@ export class FolderService {
       this.getUserFolders(user.id).subscribe({
         error : (error : Result<Folder[]>) => {
           this.folders.update(() => []);
+          window.location.reload(); // refresh the entire page to reload categories, folders, and period
         }
       });
     }
