@@ -81,9 +81,8 @@ export class PeriodService {
     return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/clone/${userId}`, {})
       .pipe(
         map((response: any)=> {
-          const period = response as Result<Period>;
-          this.activePeriod.update(() => period.value);
-          return period;
+          window.location.reload(); // refresh the entire page to reload categories, folders, and period
+          return response as Result<Period>;
         })
       );
   }
