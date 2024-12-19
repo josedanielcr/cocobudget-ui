@@ -1,6 +1,6 @@
 export class BankAccount {
   id : string | undefined;
-  isActivate : boolean | undefined;
+  isActive : boolean | undefined;
   createdOn : Date | undefined;
   modifiedOn : Date | undefined;
   name : string | undefined;
@@ -14,7 +14,7 @@ export class BankAccount {
   constructor(id : string | undefined, isActivate : boolean | undefined, createdOn : Date | undefined,
             bankName : string | undefined,  modifiedOn : Date | undefined, name : string | undefined, currentBalance : number | undefined, currency : string | undefined, accountNumber : string | undefined, notes : string | undefined, userId : string | undefined) {
     this.id = id;
-    this.isActivate = isActivate;
+    this.isActive = isActivate;
     this.createdOn = createdOn;
     this.modifiedOn = modifiedOn;
     this.bankName = bankName;

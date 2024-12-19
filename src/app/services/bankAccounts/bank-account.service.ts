@@ -13,7 +13,7 @@ export class BankAccountService {
 
   private readonly _budgetServiceEndpoint = environment.budgetService;
   private readonly _folderServicePrefix = 'accounts';
-  private accounts : WritableSignal<BankAccount[] | null> = signal<BankAccount[] | null>(null);
+  public accounts : WritableSignal<BankAccount[] | null> = signal<BankAccount[] | null>(null);
 
   private userAccountsEffect = effect(() => {
     const user = this.accountService.user();

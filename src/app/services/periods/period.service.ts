@@ -8,7 +8,7 @@ import {environment} from '../../../environments/environment';
 import {AccountService} from '../accounts/account.service';
 import {
   CreateExpiredPeriodComponent
-} from '../../components/core/create-expired-period/create-expired-period.component';
+} from '../../components/core/periods/create-expired-period/create-expired-period.component';
 import {MessageService} from '../utils/message.service';
 
 @Injectable({

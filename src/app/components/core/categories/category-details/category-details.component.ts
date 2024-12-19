@@ -1,15 +1,15 @@
 import {Component, effect, ElementRef, Input, ViewChild} from '@angular/core';
-import {Category} from '../../../models/Category';
-import {FolderService} from '../../../services/folders/folder.service';
-import {CustomCurrencyPipePipe} from '../../../pipes/custom-currency-pipe.pipe';
+import {Category} from '../../../../models/Category';
+import {FolderService} from '../../../../services/folders/folder.service';
+import {CustomCurrencyPipePipe} from '../../../../pipes/custom-currency-pipe.pipe';
 import {
   CategoryAmountsProgressBarComponent
-} from '../../shared/category-amounts-progress-bar/category-amounts-progress-bar.component';
-import {CategoryType} from '../../../models/Enums/CategoryType.enum';
-import {CategoryService} from '../../../services/categories/category.service';
-import {MessageService} from '../../../services/utils/message.service';
-import {Result} from '../../../shared/Result';
-import {ToastType} from '../../../models/Enums/ToastType.enum';
+} from '../../../shared/category-amounts-progress-bar/category-amounts-progress-bar.component';
+import {CategoryType} from '../../../../models/Enums/CategoryType.enum';
+import {CategoryService} from '../../../../services/categories/category.service';
+import {MessageService} from '../../../../services/utils/message.service';
+import {Result} from '../../../../shared/Result';
+import {ToastType} from '../../../../models/Enums/ToastType.enum';
 import {HSOverlay} from 'preline/preline';
 import {UpdateCategoryComponent} from '../update-category/update-category.component';
 

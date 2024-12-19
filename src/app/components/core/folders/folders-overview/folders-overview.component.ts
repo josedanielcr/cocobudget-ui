@@ -8,18 +8,18 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {FolderService} from '../../../services/folders/folder.service';
+import {FolderService} from '../../../../services/folders/folder.service';
 import {CreateFolderComponent} from '../create-folder/create-folder.component';
 import {HSAccordion, HSOverlay} from 'preline/preline';
-import {Folder} from '../../../models/Folder';
-import {Result} from '../../../shared/Result';
-import {MessageService} from '../../../services/utils/message.service';
-import {ToastType} from '../../../models/Enums/ToastType.enum';
+import {Folder} from '../../../../models/Folder';
+import {Result} from '../../../../shared/Result';
+import {MessageService} from '../../../../services/utils/message.service';
+import {ToastType} from '../../../../models/Enums/ToastType.enum';
 import {FolderState} from './FolderState';
 import {NgClass} from '@angular/common';
-import {UpdateFolderRequest} from '../../../models/contracts/folder/UpdateFolderRequest';
-import {CategoryOverviewComponent} from '../category-overview/category-overview.component';
-import {CreateCategoryComponent} from '../create-category/create-category.component';
+import {UpdateFolderRequest} from '../../../../models/contracts/folder/UpdateFolderRequest';
+import {CategoryOverviewComponent} from '../../categories/category-overview/category-overview.component';
+import {CreateCategoryComponent} from '../../categories/create-category/create-category.component';
 
 @Component({
   selector: 'app-folders-overview',

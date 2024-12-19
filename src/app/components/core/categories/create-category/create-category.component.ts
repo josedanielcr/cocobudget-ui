@@ -1,17 +1,17 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CategoryType} from '../../../models/Enums/CategoryType.enum';
-import {EnumArray} from '../../../models/utils/EnumArray';
+import {CategoryType} from '../../../../models/Enums/CategoryType.enum';
+import {EnumArray} from '../../../../models/utils/EnumArray';
 import {CurrencyPipe, NgClass} from '@angular/common';
-import {MessageService} from '../../../services/utils/message.service';
-import {ToastType} from '../../../models/Enums/ToastType.enum';
-import {CategoryService} from '../../../services/categories/category.service';
-import {CreateCategoryRequest} from '../../../models/contracts/categories/CreateCategoryRequest';
-import {Category} from '../../../models/Category';
-import {Result} from '../../../shared/Result';
-import {AccountService} from '../../../services/accounts/account.service';
-import {PrelineService} from '../../../services/utils/preline.service';
-import {EnumsService} from '../../../services/utils/enums.service';
+import {MessageService} from '../../../../services/utils/message.service';
+import {ToastType} from '../../../../models/Enums/ToastType.enum';
+import {CategoryService} from '../../../../services/categories/category.service';
+import {CreateCategoryRequest} from '../../../../models/contracts/categories/CreateCategoryRequest';
+import {Category} from '../../../../models/Category';
+import {Result} from '../../../../shared/Result';
+import {AccountService} from '../../../../services/accounts/account.service';
+import {PrelineService} from '../../../../services/utils/preline.service';
+import {EnumsService} from '../../../../services/utils/enums.service';
 
 @Component({
   selector: 'app-create-category',
