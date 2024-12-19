@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {Category} from '../../../models/Category';
+import {Category} from '../../../../models/Category';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CategoryType} from '../../../models/Enums/CategoryType.enum';
+import {CategoryType} from '../../../../models/Enums/CategoryType.enum';
 import {CurrencyPipe} from '@angular/common';
-import {EnumsService} from '../../../services/utils/enums.service';
-import {MessageService} from '../../../services/utils/message.service';
-import {ToastType} from '../../../models/Enums/ToastType.enum';
-import {UpdateCategoryRequest} from '../../../models/contracts/categories/UpdateCategoryRequest';
-import {CategoryService} from '../../../services/categories/category.service';
-import {Result} from '../../../shared/Result';
+import {EnumsService} from '../../../../services/utils/enums.service';
+import {MessageService} from '../../../../services/utils/message.service';
+import {ToastType} from '../../../../models/Enums/ToastType.enum';
+import {UpdateCategoryRequest} from '../../../../models/contracts/categories/UpdateCategoryRequest';
+import {CategoryService} from '../../../../services/categories/category.service';
+import {Result} from '../../../../shared/Result';
 
 @Component({
   selector: 'app-update-category',

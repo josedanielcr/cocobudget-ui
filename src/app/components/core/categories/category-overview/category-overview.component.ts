@@ -1,9 +1,9 @@
 import { Component, Input} from '@angular/core';
-import {Category} from '../../../models/Category';
+import {Category} from '../../../../models/Category';
 import {CreateCategoryComponent} from '../create-category/create-category.component';
-import {CategoryLearnInfoComponent} from '../../shared/category-learn-info/category-learn-info.component';
+import {CategoryLearnInfoComponent} from '../../../shared/category-learn-info/category-learn-info.component';
 import {CategoryDetailsComponent} from '../category-details/category-details.component';
-import {CustomCurrencyPipePipe} from '../../../pipes/custom-currency-pipe.pipe';
+import {CustomCurrencyPipePipe} from '../../../../pipes/custom-currency-pipe.pipe';
 import {UpdateCategoryComponent} from "../update-category/update-category.component";
 
 @Component({

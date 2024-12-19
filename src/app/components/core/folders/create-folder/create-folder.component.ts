@@ -4,11 +4,11 @@ import {HSOverlay} from 'preline/preline';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {merge} from 'rxjs';
-import {MessageService} from '../../../services/utils/message.service';
-import {FolderService} from '../../../services/folders/folder.service';
-import {ToastType} from '../../../models/Enums/ToastType.enum';
-import {CreateFolderRequest} from '../../../models/contracts/folder/CreateFolderRequest';
-import {AccountService} from '../../../services/accounts/account.service';
+import {MessageService} from '../../../../services/utils/message.service';
+import {FolderService} from '../../../../services/folders/folder.service';
+import {ToastType} from '../../../../models/Enums/ToastType.enum';
+import {CreateFolderRequest} from '../../../../models/contracts/folder/CreateFolderRequest';
+import {AccountService} from '../../../../services/accounts/account.service';
 
 @Component({
   selector: 'app-create-folder',

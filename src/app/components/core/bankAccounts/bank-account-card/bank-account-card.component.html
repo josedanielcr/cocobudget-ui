@@ -1,0 +1,39 @@
+<!-- Card -->
+<div class="flex flex-col bg-white border shadow-sm rounded-xl">
+  <div class="p-4 md:p-5 flex justify-between gap-x-3">
+    <div>
+      <p class="text-xs uppercase tracking-wide text-gray-500">
+        <span class="font-bold">{{bankAccount?.name}}</span> - {{bankAccount?.accountNumber}}
+      </p>
+      <div class="mt-1 flex items-center gap-x-2">
+        <h3 class="mt-1 text-xl font-medium text-gray-800">
+          {{bankAccount?.currentBalance | customCurrencyPipe}}
+        </h3>
+      </div>
+    </div>
+    <div class="shrink-0 flex justify-center items-center size-[46px] bg-primary-400 text-white rounded-full">
+      <svg  class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+    </div>
+  </div>
+
+  <div class="ps-5 pe-5 pb-5 flex justify-between gap-x-3">
+    <p class="text-sm text-gray-500">
+      <span class="font-semibold text-gray-800">{{bankAccount?.bankName}}</span>
+    </p>
+    <span class="ms-1 inline-flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-medium bg-gray-200 text-gray-800">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-3 self-center">
+        <rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+      <span class="inline-block">
+        {{bankAccount?.currency}}
+      </span>
+    </span>
+  </div>
+
+  <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl" href="#">
+    View transactions
+    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </a>
+</div>
+<!-- End Card -->

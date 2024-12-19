@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {
   BankAccountsOverviewComponent
-} from '../../components/core/bank-accounts-overview/bank-accounts-overview.component';
+} from '../../components/core/bankAccounts/bank-accounts-overview/bank-accounts-overview.component';
 
 @Component({
   selector: 'app-accounts',
