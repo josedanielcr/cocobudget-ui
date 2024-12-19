@@ -7,6 +7,7 @@ import {
   CreateExpiredPeriodComponent
 } from '../../components/core/create-expired-period/create-expired-period.component';
 import {PeriodService} from '../../services/periods/period.service';
+import {Folder} from '../../models/Folder';
 
 @Component({
   selector: 'app-budget',
@@ -35,7 +36,11 @@ export class BudgetComponent implements AfterViewInit{
   areFoldersAvailable() : boolean {
     if(this.folderService.folders()?.length === 0) return false;
     else {
-      return this.folderService.folders()!.filter(folder => folder.isActive).length > 0;
+      if(!this.folderService.folders()) return false;
+      const activeFolders = this.folderService.folders()!.filter((folder : Folder) => {
+        return folder.isActive;
+      });
+        return activeFolders.length > 0;
     }
   }
 }
