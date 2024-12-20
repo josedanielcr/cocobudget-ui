@@ -1,17 +1,17 @@
 <!-- Card -->
 <div class="bg-white border shadow-sm rounded-xl h-full">
-  <button class="h-full w-full flex items-center justify-center" aria-controls="hs-create-bank-account" data-hs-overlay="#hs-create-bank-account">
+  <button #button class="h-full w-full flex items-center justify-center" aria-controls="hs-create-bank-account" data-hs-overlay="#hs-create-bank-account">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
   </button>
 </div>
 <!-- End Card -->
 
-<div #modal id="hs-create-bank-account" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-bg-gray-on-hover-cards-label">
+<div id="hs-create-bank-account" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-bg-gray-on-hover-cards-label">
   <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-4xl sm:w-full m-3 h-[calc(100%-3.5rem)] sm:mx-auto">
     <div class="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
       <div class="flex justify-between items-center py-3 px-4 border-b">
         <h3 id="hs-bg-gray-on-hover-cards-label" class="font-bold text-gray-800">
-          Add the necessary details to create a bank account
+          Add Bank Account Details
         </h3>
         <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2
         rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50
@@ -30,17 +30,102 @@
 
                 <!--  name-->
                 <div class="space-y-2">
-                  <label for="input-folder-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5">
+                  <label for="input-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5">
                     Name
                   </label>
 
-                  <input id="input-folder-name" type="text" class="py-2 px-3 pe-11 block w-full border-1
+                  <input id="input-name" type="text" class="py-2 px-3 pe-11 block w-full border-1
                   border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50
-                  disabled:pointer-events-none" placeholder="Enter your bank account name">
-<!--                  @if(folderName.invalid && (!folderName.untouched)) {-->
-<!--                    <p class="text-sm text-red-600 mt-2" id="hs-validation-name">Please add the name of your folder</p>-->
-<!--                  }-->
+                  disabled:pointer-events-none" placeholder="e.g., Checking, Savings" [formControl]="name">
+                  @if(name.invalid && (!name.untouched)) {
+                    <p class="text-sm text-red-600 mt-2" id="hs-name">The name of your bank account is required</p>
+                  }
                 </div>
+
+                <!--  bank name-->
+                <div class="space-y-2">
+                  <label for="input-bank-name" class="inline-block text-sm font-medium text-gray-800 mt-2">
+                    Bank name
+                  </label>
+
+                  <input id="input-bank-name" type="text" class="py-2 px-3 pe-11 block w-full border-1
+                  border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50
+                  disabled:pointer-events-none" placeholder="e.g., Cocobudget Bank" [formControl]="bankName">
+                  @if(bankName.invalid && (!bankName.untouched)) {
+                    <p class="text-sm text-red-600 mt-2" id="hs-validation-name">The name of your bank is required</p>
+                  }
+                </div>
+
+                <!--  currency-->
+                <div class="space-y-2">
+                  <label for="input-currency" class="inline-block text-sm font-medium text-gray-800 mt-2">
+                    Account currency
+                  </label>
+                  <select data-hs-select='{
+                    "placeholder": "Select your currency...",
+                    "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                    "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-primary-400",
+                    "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+                    "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+                    "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 \" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
+                    "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+                  }' class="hidden"
+                          id="input-currency"
+                          [formControl]="currency">
+                    <option value="USD">USD - United States</option>
+                    <!--                  @for(currency of currencyService.currencies()?.supportedCurrencyCodes; track currency){-->
+                    <!--                    <option value="{{currency.code}}">{{currency.name}} - {{currency.code}}</option>-->
+                    <!--                  }-->
+                  </select>
+                  @if(currency.invalid && (!currency.untouched)) {
+                    <p class="text-sm text-red-600 mt-2" id="hs-currency">The currency of your bank account is required</p>
+                  }
+                </div>
+
+                <!-- currency and account number-->
+                <div class="space-y-2 flex items-baseline gap-4">
+                  <div class="flex-grow">
+                    <label for="input-account-number" class="inline-block text-sm font-medium text-gray-800 mt-2">
+                      Account number (Last 4 digits)
+                    </label>
+
+                    <input id="input-account-number" type="text" class="py-2 px-3 pe-11 block w-full border-1
+                  border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50
+                  disabled:pointer-events-none" min="0" maxlength="4" placeholder="e.g., 0101" [formControl]="accountNumber">
+                    @if(accountNumber.invalid && (!accountNumber.untouched)) {
+                      <p class="text-sm text-red-600 mt-2" id="hs-account-number">Your last account 4 digits are required</p>
+                    }
+                  </div>
+                  <div class="flex-grow h-full">
+                    <label for="input-balance" class="inline-block text-sm font-medium text-gray-800">
+                      Current balance (Optional)
+                    </label>
+
+                    <input id="input-balance"
+                           type="text"
+                           value=""
+                           [formControl]="currentBalance"
+                           (input)="onInputTargetChange($event)"
+                           (blur)="formatValue()"
+                           class="border-1 py-2 px-3 pe-11 block w-full
+                         border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500
+                         focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                           placeholder="e.g., 100.00">
+                  </div>
+                </div>
+
+                <!-- notes-->
+                <div class="space-y-2">
+                  <label for="input-balance" class="inline-block text-sm font-medium text-gray-800">
+                    Notes (Optional)
+                  </label>
+                  <div class="space-y-3">
+                  <textarea class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 border-1
+                  focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" rows="3" placeholder="Add extra information or details"
+                  [formControl]="notes"></textarea>
+                  </div>
+                </div>
+
               </div>
               <!-- End Grid -->
             </div>
@@ -49,8 +134,9 @@
       </div>
 
       <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
-        <a class="inline-flex items-center gap-x-1 text-sm text-secondary-100 decoration-2 hover:underline focus:outline-none focus:underline font-medium cursor-pointer">
-          Create
+        <a class="inline-flex items-center gap-x-1 text-sm text-secondary-100 decoration-2 hover:underline focus:outline-none
+        focus:underline font-medium cursor-pointer" (click)="create()">
+          Create Account
           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       </div>
