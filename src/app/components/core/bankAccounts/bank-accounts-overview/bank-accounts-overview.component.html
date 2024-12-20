@@ -6,7 +6,7 @@
     <!-- Grid -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       @for(account of this.bankAccountService.accounts(); track account){
-        <app-bank-account-card [bankAccount]="account"></app-bank-account-card>
+        <app-bank-account-card [bankAccount]="account" [isActive]="isBankAccountActive(account)" (onActivate)="activate($event)"></app-bank-account-card>
       }
       <app-create-bank-account></app-create-bank-account>
     </div>

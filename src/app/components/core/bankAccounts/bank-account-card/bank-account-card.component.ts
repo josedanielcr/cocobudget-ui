@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BankAccount} from '../../../../models/BankAccount';
 import {CustomCurrencyPipePipe} from '../../../../pipes/custom-currency-pipe.pipe';
 
@@ -14,5 +14,12 @@ import {CustomCurrencyPipePipe} from '../../../../pipes/custom-currency-pipe.pip
 export class BankAccountCardComponent {
 
   @Input() bankAccount : BankAccount | undefined;
+  @Input() isActive : boolean = false;
+  @Output() onActivate = new EventEmitter<string>();
 
+  constructor() { }
+
+  activate() {
+    this.onActivate.emit(this.bankAccount?.id);
+  }
 }

@@ -39,4 +39,21 @@ export class BankAccountService {
         }
       ));
   }
+
+  createBankAccount(createBankAccountRequest: any) : Observable<Result<BankAccount>> {
+    return this.httpClient.post(`${this._budgetServiceEndpoint}${this._folderServicePrefix}/bank`, createBankAccountRequest)
+      .pipe(
+        map((response: any) => {
+          const bankAccount = response as Result<BankAccount>;
+          this.accounts.update((accounts) => {
+            if(!accounts){
+              accounts = [];
+            }
+            accounts.push(bankAccount.value!);
+            return accounts;
+          });
+          return bankAccount;
+        })
+      );
+  }
 }

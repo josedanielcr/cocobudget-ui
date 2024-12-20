@@ -5,6 +5,7 @@ import {CreateBankAccountComponent} from '../create-bank-account/create-bank-acc
 import {
   BankAccountTransactionsOverviewComponent
 } from '../../transactions/bank-account-transactions-overview/bank-account-transactions-overview.component';
+import {BankAccount} from '../../../../models/BankAccount';
 
 @Component({
   selector: 'app-bank-accounts-overview',
@@ -19,6 +20,8 @@ import {
 })
 export class BankAccountsOverviewComponent {
 
+  activeBankAccount : BankAccount | undefined = undefined;
+
   constructor(public bankAccountService : BankAccountService) {
   }
 
@@ -27,6 +30,21 @@ export class BankAccountsOverviewComponent {
     if(this.bankAccountService.accounts()?.length === 0) return false;
     const bankAccounts = this.bankAccountService.accounts();
     const activeAccounts = bankAccounts!.filter(account => account.isActive);
+    this.setActiveBankAccount(activeAccounts[0]);
     return activeAccounts.length > 0;
+  }
+
+  isBankAccountActive(account: BankAccount) {
+    return account.id === this.activeBankAccount?.id;
+  }
+
+  activate($event: string) {
+    this.activeBankAccount = this.bankAccountService.accounts()?.find(account => account.id === $event);
+  }
+
+  private setActiveBankAccount(bankAccount: BankAccount) {
+    if(!bankAccount) return;
+    if(this.activeBankAccount) return;
+    this.activeBankAccount = bankAccount;
   }
 }
