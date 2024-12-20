@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {BankAccount} from '../../../../models/BankAccount';
 
 @Component({
   selector: 'app-bank-account-transactions-overview',
@@ -9,4 +10,5 @@ import { Component } from '@angular/core';
 })
 export class BankAccountTransactionsOverviewComponent {
 
+  @Input() bankAccount : BankAccount | undefined;
 }
