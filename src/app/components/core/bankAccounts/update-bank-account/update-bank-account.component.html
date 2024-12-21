@@ -1,0 +1,124 @@
+@if(bankAccount){
+  <!-- Button -->
+  <button #button class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:bg-white cursor-pointer"
+          data-hs-overlay="#hs-update-bank-account"
+          aria-controls="hs-update-bank-account">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="black" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" class="shrink-0 size-4"><path d="M12 20h9"/>
+      <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/><path d="m15 5 3 3"/></svg>
+  </button>
+  <!-- Button -->
+  <div id="hs-update-bank-account" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none"
+       role="dialog" tabindex="-1" aria-labelledby="hs-bg-gray-on-hover-cards-label">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-4xl sm:w-full m-3 h-[calc(100%-3.5rem)] sm:mx-auto">
+      <div class="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
+        <div class="flex justify-between items-center py-3 px-4 border-b">
+          <h3 id="hs-bg-gray-on-hover-cards-label" class="font-bold text-gray-800">
+            Modify Bank Account Details
+          </h3>
+          <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2
+        rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50
+        disabled:pointer-events-none" aria-label="Close" data-hs-overlay="#hs-update-bank-account">
+            <span class="sr-only">Close</span>
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="p-4 overflow-y-auto">
+          <div class="sm:divide-y divide-gray-200">
+            <form>
+              <div class="pt-0 p-4 sm:pt-0 sm:p-7 text-start">
+                <!-- Grid -->
+                <div class="space-y-4 sm:space-y-6">
+
+                  <!--  name-->
+                  <div class="space-y-2">
+                    <label for="input-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5">
+                      Name
+                    </label>
+
+                    <input id="input-name" type="text" class="py-2 px-3 pe-11 block w-full border-1
+                  border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50
+                  disabled:pointer-events-none" placeholder="e.g., Checking, Savings" [formControl]="name">
+                    @if(name.invalid && (!name.untouched)) {
+                      <p class="text-sm text-red-600 mt-2" id="hs-name">The name of your bank account is required</p>
+                    }
+                  </div>
+
+                  <!--  bank name-->
+                  <div class="space-y-2">
+                    <label for="input-bank-name" class="inline-block text-sm font-medium text-gray-800 mt-2">
+                      Bank name
+                    </label>
+
+                    <input id="input-bank-name" type="text" class="py-2 px-3 pe-11 block w-full border-1
+                  border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50
+                  disabled:pointer-events-none" placeholder="e.g., Cocobudget Bank" [formControl]="bankName">
+                    @if(bankName.invalid && (!bankName.untouched)) {
+                      <p class="text-sm text-red-600 mt-2" id="hs-validation-name">The name of your bank is required</p>
+                    }
+                  </div>
+
+                  <!-- currency and account number-->
+                  <div class="space-y-2 flex items-baseline gap-4">
+                    <div class="flex-grow">
+                      <label for="input-account-number" class="inline-block text-sm font-medium text-gray-800 mt-2">
+                        Account number (Last 4 digits)
+                      </label>
+
+                      <input id="input-account-number" type="text" class="py-2 px-3 pe-11 block w-full border-1
+                  border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50
+                  disabled:pointer-events-none" min="0" maxlength="4" placeholder="e.g., 0101" [formControl]="accountNumber">
+                      @if(accountNumber.invalid && (!accountNumber.untouched)) {
+                        <p class="text-sm text-red-600 mt-2" id="hs-account-number">Your last account 4 digits are required</p>
+                      }
+                    </div>
+                    <div class="flex-grow h-full">
+                      <label for="input-balance" class="inline-block text-sm font-medium text-gray-800">
+                        Current balance (Optional)
+                      </label>
+
+                      <input id="input-balance"
+                             type="text"
+                             value=""
+                             [formControl]="currentBalance"
+                             (input)="onInputTargetChange($event)"
+                             (blur)="formatValue()"
+                             class="border-1 py-2 px-3 pe-11 block w-full
+                         border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500
+                         focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                             placeholder="e.g., 100.00">
+                    </div>
+                  </div>
+
+                  <!-- notes-->
+                  <div class="space-y-2">
+                    <label for="input-balance" class="inline-block text-sm font-medium text-gray-800">
+                      Notes (Optional)
+                    </label>
+                    <div class="space-y-3">
+                  <textarea class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 border-1
+                  focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" rows="3" placeholder="Add extra information or details"
+                            [formControl]="notes"></textarea>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- End Grid -->
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
+          <a class="inline-flex items-center gap-x-1 text-sm text-secondary-100 decoration-2 hover:underline focus:outline-none
+          focus:underline font-medium cursor-pointer" (click)="update()">
+            Modify Account
+            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+}
