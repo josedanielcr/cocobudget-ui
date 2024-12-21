@@ -20,7 +20,6 @@ export class UpdateBankAccountComponent implements AfterViewInit {
   readonly name : FormControl = new FormControl('',[Validators.required]);
   readonly bankName : FormControl = new FormControl('',[ Validators.required]);
   readonly currentBalance : FormControl = new FormControl('',[Validators.required]);
-  readonly currency : FormControl = new FormControl('',[Validators.required]);
   readonly accountNumber : FormControl = new FormControl('',[Validators.required]);
   readonly notes : FormControl = new FormControl('', [Validators.required]);
 
@@ -37,7 +36,6 @@ export class UpdateBankAccountComponent implements AfterViewInit {
     this.currentBalance.setValue(this.bankAccount?.currentBalance);
     this.accountNumber.setValue(this.bankAccount?.accountNumber);
     this.notes.setValue(this.bankAccount?.notes);
-    this.currency.setValue(this.bankAccount?.currency);
   }
 
   onInputTargetChange($event: Event) {
