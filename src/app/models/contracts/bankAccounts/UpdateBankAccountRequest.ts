@@ -1,4 +1,4 @@
-export class CreateBankAccountRequest {
+export class UpdateBankAccountRequest {
   name : string = '';
   bankName : string = '';
   currentBalance : number | undefined;

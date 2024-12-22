@@ -56,4 +56,40 @@ export class BankAccountService {
         })
       );
   }
+
+  updateBankAccount(updateBankAccountRequest: any, id : string) : Observable<Result<BankAccount>> {
+    return this.httpClient.put(`${this._budgetServiceEndpoint}${this._folderServicePrefix}/bank/${id}`, updateBankAccountRequest)
+      .pipe(
+        map((response: any) => {
+          const bankAccount = response as Result<BankAccount>;
+          this.accounts.update((accounts) => {
+            if(!accounts){
+              accounts = [];
+            }
+            const index = accounts.findIndex((account) => account.id === bankAccount.value?.id);
+            accounts[index] = bankAccount.value!;
+            return accounts;
+          });
+          return bankAccount;
+        })
+      );
+  }
+
+  delete(id : string) : Observable<Result<BankAccount>> {
+    return this.httpClient.delete(`${this._budgetServiceEndpoint}${this._folderServicePrefix}/bank/${id}`)
+      .pipe(
+        map((response: any) => {
+          const bankAccount = response as Result<BankAccount>;
+          this.accounts.update((accounts) => {
+            if(!accounts){
+              accounts = [];
+            }
+            const index = accounts.findIndex((account) => account.id === bankAccount.value?.id);
+            accounts.splice(index, 1);
+            return accounts;
+          });
+          return bankAccount;
+        })
+      );
+  }
 }
