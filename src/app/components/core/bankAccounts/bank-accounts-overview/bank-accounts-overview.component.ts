@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {AfterViewChecked, Component} from '@angular/core';
 import {BankAccountService} from '../../../../services/bankAccounts/bank-account.service';
 import {BankAccountCardComponent} from '../bank-account-card/bank-account-card.component';
 import {CreateBankAccountComponent} from '../create-bank-account/create-bank-account.component';
@@ -18,11 +18,17 @@ import {BankAccount} from '../../../../models/BankAccount';
   templateUrl: './bank-accounts-overview.component.html',
   styleUrl: './bank-accounts-overview.component.css'
 })
-export class BankAccountsOverviewComponent {
+export class BankAccountsOverviewComponent implements AfterViewChecked{
 
   activeBankAccount : BankAccount | undefined = undefined;
 
   constructor(public bankAccountService : BankAccountService) {
+  }
+
+  ngAfterViewChecked(): void {
+    window.HSStaticMethods.autoInit('overlay');
+    window.HSStaticMethods.autoInit('accordion');
+    window.HSStaticMethods.autoInit('select');
   }
 
   areBankAccountsAvailable() {

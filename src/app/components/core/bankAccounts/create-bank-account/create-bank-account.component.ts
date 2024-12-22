@@ -67,7 +67,7 @@ export class CreateBankAccountComponent {
     return inputValue.replace(/[\$,]/g, '');
   }
 
-  formatValue() {
+  formatValueOnBlur() {
     this.formatAmountValue(this.currentBalance);
   }
 
