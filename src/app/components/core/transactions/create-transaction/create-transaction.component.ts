@@ -9,6 +9,9 @@ import {MessageService} from '../../../../services/utils/message.service';
 import {ToastType} from '../../../../models/Enums/ToastType.enum';
 import {CreateTransactionRequest} from '../../../../models/contracts/transactions/CreateTransactionRequest';
 import {TransactionService} from '../../../../services/transactions/transaction.service';
+import {EnumsService} from '../../../../services/utils/enums.service';
+import {TransactionTypeEnum} from '../../../../models/Enums/TransactionType.enum';
+import {EnumArray} from '../../../../models/utils/EnumArray';
 
 @Component({
   selector: 'app-create-transaction',
@@ -38,7 +41,8 @@ export class CreateTransactionComponent {
   constructor(private currencyPipe : CurrencyPipe,
               public folderService : FolderService,
               private messageService : MessageService,
-              private transactionService : TransactionService) {
+              private transactionService : TransactionService,
+              private enumService : EnumsService) {
   }
 
   simulateButtonOnClick() {
@@ -144,5 +148,9 @@ export class CreateTransactionComponent {
     this.categoryId.setValue('');
     this.folderId.setValue('');
     this.notes.setValue('');
+  }
+
+  getTransactionTypes(): EnumArray[] {
+    return this.enumService.createEnumArray(TransactionTypeEnum);
   }
 }
