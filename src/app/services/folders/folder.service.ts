@@ -94,4 +94,17 @@ export class FolderService {
         })
       );
   }
+
+  public getCategoryNameById(id : string | undefined) : string | undefined {
+    if(!id) return 'No category found';
+    let category : Category | undefined;
+    this.folders()?.forEach((folder : Folder) => {
+      folder.categories!.forEach((cat : Category) => {
+        if(cat.id === id) {
+          category = cat;
+        }
+      });
+    });
+    return category?.name;
+  }
 }

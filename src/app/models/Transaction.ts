@@ -1,6 +1,6 @@
 export class Transaction {
   id : string | undefined;
-  createOn : Date | undefined;
+  createdOn : Date | undefined;
   modifiedOn : Date | undefined;
   isActive : boolean | undefined;
   amount : number | undefined;
