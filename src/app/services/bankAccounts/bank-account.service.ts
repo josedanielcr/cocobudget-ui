@@ -5,6 +5,7 @@ import {map, Observable} from 'rxjs';
 import {Result} from '../../shared/Result';
 import {BankAccount} from '../../models/BankAccount';
 import {AccountService} from '../accounts/account.service';
+import {TransactionTypeEnum} from '../../models/Enums/TransactionType.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -91,5 +92,25 @@ export class BankAccountService {
           return bankAccount;
         })
       );
+  }
+
+  updateBankAccountBalance(amount : number, transactionType : TransactionTypeEnum, bankAccountId : string) {
+    const bankAccount = this.accounts()?.find((account) => account.id === bankAccountId);
+    if (!bankAccount) return;
+
+    if (transactionType === TransactionTypeEnum.Expense || transactionType === TransactionTypeEnum.NotTrackable) {
+      bankAccount.currentBalance! -= amount;
+    } else {
+      bankAccount.currentBalance! += amount;
+    }
+
+    this.accounts.update((accounts) => {
+      if (!accounts) return [];
+      const index = accounts.findIndex((account) => account.id === bankAccountId);
+      if (index !== -1) {
+        accounts[index] = bankAccount;
+      }
+      return accounts;
+    });
   }
 }

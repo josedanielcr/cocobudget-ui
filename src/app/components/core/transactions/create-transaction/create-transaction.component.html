@@ -75,7 +75,7 @@
                 </div>
 
 
-                @if(folderService.folders()){
+                @if(folderService.folders() && type.value == TransactionTypeEnum.Expense){
                   <!--  folder -->
                   <div class="space-y-2">
                     <label for="input-currency" class="inline-block text-sm font-medium text-gray-800 mt-2">
