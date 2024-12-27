@@ -6,6 +6,7 @@ import {map, Observable} from 'rxjs';
 import {Result} from '../../shared/Result';
 import {Transaction} from '../../models/Transaction';
 import {BankAccountService} from '../bankAccounts/bank-account.service';
+import {ReviewTransactionRequest} from '../../models/contracts/transactions/ReviewTransactionRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -17,20 +18,7 @@ export class TransactionService {
 
   public transactions : WritableSignal<Transaction[] | null> = signal<Transaction[] | null>(null);
   private transactionsEffect = effect(() => {
-    const bankAccounts = this.bankAccountService.accounts();
-    if (bankAccounts) {
-      bankAccounts.forEach(bankAccount => {
-        this.getBankAccountTransactions(bankAccount.id as string).subscribe({
-          next : (result : Result<Transaction[]>) => {
-            const transactions = this.transactions() || [];
-            transactions?.push(...result.value as Transaction[]);
-            this.transactions.update(() => transactions);
-            console.log(this.transactions());
-          },
-          error : (error : Result<Transaction[]>) => {}
-        });
-      });
-    }
+    this.updateTransactionsSignal();
   });
 
   constructor(private httpClient : HttpClient,
@@ -40,6 +28,10 @@ export class TransactionService {
     return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}`, createTransactionRequest)
       .pipe(
         map((response: any)=> {
+          const transaction = response as Result<Transaction>;
+          const transactions = this.transactions() || [];
+          transactions.push(transaction.value as Transaction);
+          this.transactions.update(() => transactions);
           return response as Result<Transaction>;
         })
       );
@@ -50,6 +42,46 @@ export class TransactionService {
       .pipe(
         map((response: any)=> {
           return response as Result<Transaction[]>;
+        })
+      );
+  }
+
+  private updateTransactionsSignal() {
+    const bankAccounts = this.bankAccountService.accounts();
+    if (bankAccounts) {
+      bankAccounts.forEach(bankAccount => {
+        this.getBankAccountTransactions(bankAccount.id as string).subscribe({
+          next : (result : Result<Transaction[]>) => {
+            const transactions = this.transactions() || [];
+            transactions?.push(...result.value as Transaction[]);
+            this.transactions.update(() => transactions);
+          },
+          error : (error : Result<Transaction[]>) => {}
+        });
+      });
+    }
+  }
+
+  public getRecommendedTransactionExchangeRate(transactionId : string): Observable<Result<number>>{
+    return this.httpClient.get(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/exchange-rate/${transactionId}`)
+      .pipe(
+        map((response: any)=> {
+          return response as Result<number>;
+        })
+      );
+  }
+
+  public reviewCategoryOfTransaction(reviewTransactionRequest : ReviewTransactionRequest): Observable<Result<Transaction>>{
+    return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/review`, reviewTransactionRequest)
+      .pipe(
+        map((response: any)=> {
+          const transaction = response as Result<Transaction>;
+          //find the transaction in the transactions signal and update it
+          const transactions = this.transactions() || [];
+          const index = transactions.findIndex(t => t.id === transaction.value!.id);
+          transactions[index] = transaction.value as Transaction;
+          this.transactions.update(() => transactions);
+          return response as Result<Transaction>;
         })
       );
   }
