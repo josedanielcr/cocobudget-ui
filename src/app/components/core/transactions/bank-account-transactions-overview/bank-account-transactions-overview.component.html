@@ -157,11 +157,13 @@
                     </span>
                       </button>
                     </td>
-                    @if(!transaction.requireCategoryReview){
-                      <td class="size-px whitespace-nowrap">
-                        <app-transaction-details [transaction]="transaction" [bankAccount]="bankAccount"></app-transaction-details>
-                      </td>
-                    }
+                    <td class="size-px whitespace-nowrap">
+                      @if(!transaction.requireCategoryReview){
+                          <app-transaction-details [transaction]="transaction" [bankAccount]="bankAccount"></app-transaction-details>
+                      } @else {
+                        <app-review-category-transaction [transaction]="transaction" [bankAccount]="bankAccount"></app-review-category-transaction>
+                      }
+                    </td>
                   </tr>
                 }
               }

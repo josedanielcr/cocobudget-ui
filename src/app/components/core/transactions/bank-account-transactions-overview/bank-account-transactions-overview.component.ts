@@ -8,6 +8,7 @@ import {DatePipe} from '@angular/common';
 import {TransactionDetailsComponent} from '../transaction-details/transaction-details.component';
 import {EnumsService} from '../../../../services/utils/enums.service';
 import {TransactionTypeEnum} from '../../../../models/Enums/TransactionType.enum';
+import {ReviewCategoryTransactionComponent} from '../review-category-transaction/review-category-transaction.component';
 
 @Component({
   selector: 'app-bank-account-transactions-overview',
@@ -16,7 +17,8 @@ import {TransactionTypeEnum} from '../../../../models/Enums/TransactionType.enum
     CreateTransactionComponent,
     CustomCurrencyPipePipe,
     DatePipe,
-    TransactionDetailsComponent
+    TransactionDetailsComponent,
+    ReviewCategoryTransactionComponent
   ],
   templateUrl: './bank-account-transactions-overview.component.html',
   styleUrl: './bank-account-transactions-overview.component.css'

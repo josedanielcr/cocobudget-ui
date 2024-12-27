@@ -108,7 +108,7 @@ export class CreateTransactionComponent {
     }
 
     const createTransactionReq : CreateTransactionRequest = new CreateTransactionRequest();
-    createTransactionReq.amount = this.amount.value;
+    createTransactionReq.amount = parseFloat(this.amount.value);
     createTransactionReq.type = this.type.value;
     createTransactionReq.linkedCategoryId = this.categoryId.value;
     createTransactionReq.linkedAccountId = this.bankAccount?.id || '';

@@ -17,6 +17,35 @@ export class TransactionService {
 
   public transactions : WritableSignal<Transaction[] | null> = signal<Transaction[] | null>(null);
   private transactionsEffect = effect(() => {
+    this.updateTransactionsSignal();
+  });
+
+  constructor(private httpClient : HttpClient,
+              private bankAccountService : BankAccountService) { }
+
+  public createTransaction(createTransactionRequest : CreateTransactionRequest): Observable<Result<Transaction>>{
+    return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}`, createTransactionRequest)
+      .pipe(
+        map((response: any)=> {
+          const transaction = response as Result<Transaction>;
+          const transactions = this.transactions() || [];
+          transactions.push(transaction.value as Transaction);
+          this.transactions.update(() => transactions);
+          return response as Result<Transaction>;
+        })
+      );
+  }
+
+  public getBankAccountTransactions(bankAccountId : string) : Observable<Result<Transaction[]>>{
+    return this.httpClient.get(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/bank/${bankAccountId}`)
+      .pipe(
+        map((response: any)=> {
+          return response as Result<Transaction[]>;
+        })
+      );
+  }
+
+  private updateTransactionsSignal() {
     const bankAccounts = this.bankAccountService.accounts();
     if (bankAccounts) {
       bankAccounts.forEach(bankAccount => {
@@ -31,26 +60,5 @@ export class TransactionService {
         });
       });
     }
-  });
-
-  constructor(private httpClient : HttpClient,
-              private bankAccountService : BankAccountService) { }
-
-  public createTransaction(createTransactionRequest : CreateTransactionRequest): Observable<Result<Transaction>>{
-    return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}`, createTransactionRequest)
-      .pipe(
-        map((response: any)=> {
-          return response as Result<Transaction>;
-        })
-      );
-  }
-
-  public getBankAccountTransactions(bankAccountId : string) : Observable<Result<Transaction[]>>{
-    return this.httpClient.get(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/bank/${bankAccountId}`)
-      .pipe(
-        map((response: any)=> {
-          return response as Result<Transaction[]>;
-        })
-      );
   }
 }
