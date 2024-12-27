@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {BankAccount} from '../../../../models/BankAccount';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CurrencyPipe} from '@angular/common';
@@ -24,10 +24,11 @@ import {EnumArray} from '../../../../models/utils/EnumArray';
   styleUrl: './create-transaction.component.css',
   providers: [CurrencyPipe]
 })
-export class CreateTransactionComponent {
+export class CreateTransactionComponent implements OnInit{
 
   @Input() bankAccount : BankAccount | undefined;
   public categories : Category[] = [];
+  public transactionTypes : EnumArray[] = [];
   @ViewChild('inputCategory') inputCategory : ElementRef | undefined;
   @ViewChild('button') button : ElementRef | undefined;
 
@@ -43,6 +44,10 @@ export class CreateTransactionComponent {
               private messageService : MessageService,
               private transactionService : TransactionService,
               private enumService : EnumsService) {
+  }
+
+  ngOnInit(): void {
+    this.getTransactionTypes();
   }
 
   simulateButtonOnClick() {
@@ -150,7 +155,7 @@ export class CreateTransactionComponent {
     this.notes.setValue('');
   }
 
-  getTransactionTypes(): EnumArray[] {
-    return this.enumService.createEnumArray(TransactionTypeEnum);
+  getTransactionTypes(): void {
+    this.transactionTypes = this.enumService.createEnumArray(TransactionTypeEnum);
   }
 }

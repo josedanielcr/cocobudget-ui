@@ -65,7 +65,7 @@
                   }' class="hidden"
                           id="input-type"
                           [formControl]="type">
-                    @for(type of getTransactionTypes(); track type){
+                    @for(type of transactionTypes; track type){
                       <option value="{{type.value}}">{{type.name}}</option>
                     }
                   </select>
