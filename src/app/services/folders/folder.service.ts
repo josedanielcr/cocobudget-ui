@@ -96,7 +96,7 @@ export class FolderService {
   }
 
   public getCategoryNameById(id : string | undefined) : string | undefined {
-    if(!id) return 'No category found';
+    if(!id) return '';
     let category : Category | undefined;
     this.folders()?.forEach((folder : Folder) => {
       folder.categories!.forEach((cat : Category) => {

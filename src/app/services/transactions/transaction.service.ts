@@ -7,6 +7,7 @@ import {Result} from '../../shared/Result';
 import {Transaction} from '../../models/Transaction';
 import {BankAccountService} from '../bankAccounts/bank-account.service';
 import {ReviewTransactionRequest} from '../../models/contracts/transactions/ReviewTransactionRequest';
+import {TransactionTypeEnum} from '../../models/Enums/TransactionType.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,9 @@ export class TransactionService {
       .pipe(
         map((response: any)=> {
           const transaction = response as Result<Transaction>;
+          this.bankAccountService.updateBankAccountBalance(transaction.value?.amount as number,
+            transaction.value?.type as TransactionTypeEnum,
+            transaction.value?.linkedAccountId as string);
           const transactions = this.transactions() || [];
           transactions.push(transaction.value as Transaction);
           this.transactions.update(() => transactions);
@@ -76,7 +80,6 @@ export class TransactionService {
       .pipe(
         map((response: any)=> {
           const transaction = response as Result<Transaction>;
-          //find the transaction in the transactions signal and update it
           const transactions = this.transactions() || [];
           const index = transactions.findIndex(t => t.id === transaction.value!.id);
           transactions[index] = transaction.value as Transaction;

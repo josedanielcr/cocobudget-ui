@@ -123,7 +123,9 @@
                     <td class="size-px whitespace-nowrap">
                       <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
-                      <span class="text-sm text-gray-600">{{transaction.amount | customCurrencyPipe}} {{bankAccount?.currency}}</span>
+                      <span class="text-sm text-gray-600">
+                        {{transaction.type === TransactionTypeEnum.Income ? '+' : '-'}} {{transaction.amount | customCurrencyPipe}} {{bankAccount?.currency}}
+                      </span>
                     </span>
                       </button>
                     </td>

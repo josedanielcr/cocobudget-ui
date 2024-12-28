@@ -115,7 +115,7 @@ export class CreateTransactionComponent implements OnInit{
     const createTransactionReq : CreateTransactionRequest = new CreateTransactionRequest();
     createTransactionReq.amount = parseFloat(this.amount.value);
     createTransactionReq.type = this.type.value;
-    createTransactionReq.linkedCategoryId = this.categoryId.value;
+    createTransactionReq.linkedCategoryId = this.categoryId.value || null;
     createTransactionReq.linkedAccountId = this.bankAccount?.id || '';
     createTransactionReq.note = this.notes.value;
 
@@ -123,7 +123,11 @@ export class CreateTransactionComponent implements OnInit{
   }
 
   private validateForm(): [boolean, string] {
-    if(this.amount.invalid || this.type.invalid || this.categoryId.invalid || this.folderId.invalid){
+    if(this.amount.invalid || this.type.invalid){
+      return [false, 'Please fill all required fields'];
+    }
+
+    if(TransactionTypeEnum.Expense == this.type.value && this.categoryId.invalid){
       return [false, 'Please fill all required fields'];
     }
 
@@ -158,4 +162,6 @@ export class CreateTransactionComponent implements OnInit{
   getTransactionTypes(): void {
     this.transactionTypes = this.enumService.createEnumArray(TransactionTypeEnum);
   }
+
+  protected readonly TransactionTypeEnum = TransactionTypeEnum;
 }
