@@ -12,11 +12,15 @@ import {Result} from '../../../../shared/Result';
 import {ToastType} from '../../../../models/Enums/ToastType.enum';
 import {HSOverlay} from 'preline/preline';
 import {UpdateCategoryComponent} from '../update-category/update-category.component';
+import {TransactionService} from '../../../../services/transactions/transaction.service';
+import {Transaction} from '../../../../models/Transaction';
+import {SlicePipe} from '@angular/common';
+import {BankAccountService} from '../../../../services/bankAccounts/bank-account.service';
 
 @Component({
   selector: 'app-category-details',
   standalone: true,
-  imports: [CustomCurrencyPipePipe, CategoryAmountsProgressBarComponent, UpdateCategoryComponent],
+  imports: [CustomCurrencyPipePipe, CategoryAmountsProgressBarComponent, UpdateCategoryComponent, SlicePipe],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.css'
 })
@@ -24,6 +28,7 @@ export class CategoryDetailsComponent {
 
   @Input() category : Category | undefined;
   public folderName : string = '';
+  public categoryTransactions : Transaction[] = [];
   private foldersEffect = effect(() => {
     const folders = this.folderService.folders();
     if(folders) {
@@ -34,7 +39,9 @@ export class CategoryDetailsComponent {
 
   constructor(private folderService : FolderService,
               private categoryService : CategoryService,
-              private messageService : MessageService) {}
+              private messageService : MessageService,
+              private transactionService : TransactionService,
+              private bankAccountService : BankAccountService) {}
 
   protected readonly CategoryType = CategoryType;
 
@@ -67,6 +74,22 @@ export class CategoryDetailsComponent {
   }
 
   openOffCanvas() {
-    console.log('puta')
+    this.transactionService.getCategoryTransaction(this.category?.id as string).subscribe({
+      next : (result : Result<Transaction[]>) => {
+        this.categoryTransactions = result.value as Transaction[];
+      },
+      error : (result : Result<Transaction[]>) => {
+        this.messageService.showToastMessage(result.error.message, ToastType.Error);
+      }
+    });
+  }
+
+  getBankAccountCurrency(transaction: Transaction) {
+    const bankAccount = this.bankAccountService.accounts();
+    if(bankAccount) {
+      const account = bankAccount.find(account => account.id === transaction.linkedAccountId);
+      return account?.currency;
+    }
+    return '';
   }
 }
