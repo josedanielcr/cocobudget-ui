@@ -88,4 +88,13 @@ export class TransactionService {
         })
       );
   }
+
+  public getCategoryTransaction(categoryId : string): Observable<Result<Transaction[]>>{
+    return this.httpClient.get(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/category/${categoryId}`)
+      .pipe(
+        map((response: any)=> {
+          return response as Result<Transaction[]>;
+        })
+      );
+  }
 }
