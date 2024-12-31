@@ -97,4 +97,17 @@ export class TransactionService {
         })
       );
   }
+
+  public deleteTransaction(transactionId : string): Observable<Result<boolean>>{
+    return this.httpClient.delete(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/${transactionId}`)
+      .pipe(
+        map((response: any)=> {
+          const transactions = this.transactions() || [];
+          const index = transactions.findIndex(t => t.id === transactionId);
+          transactions.splice(index, 1);
+          this.transactions.update(() => transactions);
+          return response as Result<boolean>;
+        })
+      );
+  }
 }
