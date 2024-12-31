@@ -40,7 +40,7 @@ export class TransactionDetailsComponent {
   }
 
   delete() {
-    this.transactionService.deleteTransaction(this.transaction?.id as string).subscribe({
+    this.transactionService.deleteTransaction(this.transaction as Transaction).subscribe({
       next : (result : Result<boolean>) => {
         this.messageService.showToastMessage('Transaction deleted successfully', ToastType.Success);
         this.simulateDeleteButtonOnClick();

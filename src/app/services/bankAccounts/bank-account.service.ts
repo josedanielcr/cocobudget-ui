@@ -94,14 +94,20 @@ export class BankAccountService {
       );
   }
 
-  updateBankAccountBalance(amount : number, transactionType : TransactionTypeEnum, bankAccountId : string) {
+  updateBankAccountBalance(amount : number, transactionType : TransactionTypeEnum, bankAccountId : string, isDelete : boolean = false) {
     const bankAccount = this.accounts()?.find((account) => account.id === bankAccountId);
     if (!bankAccount) return;
 
-    if (transactionType === TransactionTypeEnum.Expense || transactionType === TransactionTypeEnum.NotTrackable) {
+    if (!isDelete && (transactionType === TransactionTypeEnum.Expense || transactionType === TransactionTypeEnum.NotTrackable)) {
       bankAccount.currentBalance! -= amount;
-    } else {
+    } else if (!isDelete && transactionType === TransactionTypeEnum.Income) {
       bankAccount.currentBalance! += amount;
+    }
+
+    if(isDelete && (transactionType === TransactionTypeEnum.Expense || transactionType === TransactionTypeEnum.NotTrackable)){
+      bankAccount.currentBalance! += amount;
+    } else if (isDelete && transactionType === TransactionTypeEnum.Income){
+      bankAccount.currentBalance! -= amount;
     }
 
     this.accounts.update((accounts) => {

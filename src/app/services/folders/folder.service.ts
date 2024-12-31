@@ -19,15 +19,19 @@ export class FolderService {
 
   folders : WritableSignal<Folder[] | null> =  signal<Folder[] | null>(null);
   private userFoldersEffect = effect(() => {
+    this.loadUserFolders();
+  });
+
+  public loadUserFolders() {
     const user = this.accountService.user();
     if (user) {
       this.getUserFolders(user.id).subscribe({
-        error : (error : Result<Folder[]>) => {
+        error: (error: Result<Folder[]>) => {
           this.folders.update(() => []);
         }
       });
     }
-  });
+  }
 
   constructor(private httpClient : HttpClient,
               private accountService : AccountService) { }

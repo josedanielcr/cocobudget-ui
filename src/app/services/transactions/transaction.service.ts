@@ -8,6 +8,7 @@ import {Transaction} from '../../models/Transaction';
 import {BankAccountService} from '../bankAccounts/bank-account.service';
 import {ReviewTransactionRequest} from '../../models/contracts/transactions/ReviewTransactionRequest';
 import {TransactionTypeEnum} from '../../models/Enums/TransactionType.enum';
+import {FolderService} from '../folders/folder.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class TransactionService {
   });
 
   constructor(private httpClient : HttpClient,
-              private bankAccountService : BankAccountService) { }
+              private bankAccountService : BankAccountService,
+              private folderService : FolderService) { }
 
   public createTransaction(createTransactionRequest : CreateTransactionRequest): Observable<Result<Transaction>>{
     return this.httpClient.post(`${this._budgetServiceEndpoint}${this._periodServicePrefix}`, createTransactionRequest)
@@ -36,6 +38,7 @@ export class TransactionService {
           const transactions = this.transactions() || [];
           transactions.push(transaction.value as Transaction);
           this.transactions.update(() => transactions);
+          this.folderService.loadUserFolders();
           return response as Result<Transaction>;
         })
       );
@@ -84,6 +87,7 @@ export class TransactionService {
           const index = transactions.findIndex(t => t.id === transaction.value!.id);
           transactions[index] = transaction.value as Transaction;
           this.transactions.update(() => transactions);
+          this.folderService.loadUserFolders();
           return response as Result<Transaction>;
         })
       );
@@ -98,14 +102,17 @@ export class TransactionService {
       );
   }
 
-  public deleteTransaction(transactionId : string): Observable<Result<boolean>>{
-    return this.httpClient.delete(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/${transactionId}`)
+  public deleteTransaction(transaction : Transaction): Observable<Result<boolean>>{
+    return this.httpClient.delete(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/${transaction.id}`)
       .pipe(
         map((response: any)=> {
           const transactions = this.transactions() || [];
-          const index = transactions.findIndex(t => t.id === transactionId);
+          const index = transactions.findIndex(t => t.id === transaction.id);
           transactions.splice(index, 1);
           this.transactions.update(() => transactions);
+          this.bankAccountService.updateBankAccountBalance(transaction.amount as number, transaction.type as TransactionTypeEnum,
+            transaction.linkedAccountId as string, true);
+          this.folderService.loadUserFolders();
           return response as Result<boolean>;
         })
       );

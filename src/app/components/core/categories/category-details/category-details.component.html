@@ -126,7 +126,7 @@ max-w-2xl w-full z-[80] bg-white border-e" role="dialog" tabindex="-1" aria-labe
           @for(transaction of categoryTransactions; track transaction){
             <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
               <div class="flex items-center justify-between w-full">
-                <span>{{transaction?.note | slice:0:20}}</span>
+                <span>{{ (transaction?.note ? (transaction.note | slice: 0: 20) : 'No note') }}</span>
                 <span>{{transaction.amount | customCurrencyPipe}} {{getBankAccountCurrency(transaction)}}</span>
               </div>
             </li>
