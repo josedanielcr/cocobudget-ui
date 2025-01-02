@@ -9,6 +9,7 @@ import {BankAccountService} from '../bankAccounts/bank-account.service';
 import {ReviewTransactionRequest} from '../../models/contracts/transactions/ReviewTransactionRequest';
 import {TransactionTypeEnum} from '../../models/Enums/TransactionType.enum';
 import {FolderService} from '../folders/folder.service';
+import {TransactionInsight} from '../../models/TransactionInsight';
 
 @Injectable({
   providedIn: 'root'
@@ -114,6 +115,15 @@ export class TransactionService {
             transaction.linkedAccountId as string, true);
           this.folderService.loadUserFolders();
           return response as Result<boolean>;
+        })
+      );
+  }
+
+  public getInsights(bankAccountId : string): Observable<Result<TransactionInsight[]>>{
+    return this.httpClient.get(`${this._budgetServiceEndpoint}${this._periodServicePrefix}/insights/${bankAccountId}`)
+      .pipe(
+        map((response: any)=> {
+          return response as Result<TransactionInsight[]>;
         })
       );
   }

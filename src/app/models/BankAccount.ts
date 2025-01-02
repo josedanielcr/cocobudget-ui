@@ -1,9 +1,12 @@
+import {TransactionInsight} from './TransactionInsight';
+
 export class BankAccount {
   id : string | undefined;
   isActive : boolean | undefined;
   createdOn : Date | undefined;
   modifiedOn : Date | undefined;
   name : string | undefined;
+  insights : TransactionInsight[] | null = null;
   bankName : string | undefined;
   currentBalance : number | undefined;
   currency : string | undefined;
