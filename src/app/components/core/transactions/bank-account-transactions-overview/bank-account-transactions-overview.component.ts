@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit, signal, WritableSignal} from '@angular/core';
 import {BankAccount} from '../../../../models/BankAccount';
 import {CreateTransactionComponent} from '../create-transaction/create-transaction.component';
 import {TransactionService} from '../../../../services/transactions/transaction.service';
@@ -9,6 +9,8 @@ import {TransactionDetailsComponent} from '../transaction-details/transaction-de
 import {EnumsService} from '../../../../services/utils/enums.service';
 import {TransactionTypeEnum} from '../../../../models/Enums/TransactionType.enum';
 import {ReviewCategoryTransactionComponent} from '../review-category-transaction/review-category-transaction.component';
+import {TransactionInsight, TransactionInsightTypeEnum} from '../../../../models/TransactionInsight';
+import {Result} from '../../../../shared/Result';
 
 @Component({
   selector: 'app-bank-account-transactions-overview',
@@ -36,4 +38,5 @@ export class BankAccountTransactionsOverviewComponent {
   }
 
   protected readonly TransactionTypeEnum = TransactionTypeEnum;
+  protected readonly TransactionInsightTypeEnum = TransactionInsightTypeEnum;
 }
