@@ -147,7 +147,7 @@ export class FoldersOverviewComponent implements AfterViewChecked{
     this.foldersService.updateFolder(updateFolderRequest).subscribe({
       next: (result : Result<Folder>) => {
         this.messageService.showToastMessage('Folder updated successfully',ToastType.Success);
-        this.enableFolder(folder.id);
+        this.disableFolder(folder.id);
       },
       error : (result : Result<Folder>) => {
         this.messageService.showToastMessage(result.error.message,ToastType.Error);
