@@ -89,11 +89,16 @@ export class FolderService {
       .pipe(
         map((response: any)=> {
           const folderResult = response as Result<Folder>;
-          this.folders.update((currentFolders) =>
-            folderResult.value
-              ? (currentFolders ?? []).map(folder => folder.id === folderResult.value?.id ? folderResult.value : folder)
-              : currentFolders
-          );
+          const updatedFolder = this.folders()?.find(folder => folder.id === updateFolderReq.id);
+          if(!updatedFolder) return folderResult;
+          updatedFolder.name = folderResult.value?.name as string;
+          const index = this.folders()?.findIndex(folder => folder.id === updateFolderReq.id);
+          if(index && index > -1) {
+            this.folders.update((currentFolders) => {
+              currentFolders![index] = updatedFolder;
+              return currentFolders;
+            });
+          }
           return folderResult;
         })
       );

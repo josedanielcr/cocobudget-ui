@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, input, ViewChild} from '@angular/core';
 import {CustomCurrencyPipePipe} from '../../../../pipes/custom-currency-pipe.pipe';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CurrencyPipe} from '@angular/common';
@@ -25,6 +25,7 @@ import {AccountService} from '../../../../services/accounts/account.service';
 export class CreateBankAccountComponent {
 
   @ViewChild('button', { static : false}) createBankAccountButton : ElementRef | undefined;
+  @Input() isButton : boolean = false;
 
   // form elements
   readonly name : FormControl = new FormControl('',[Validators.required]);
@@ -90,7 +91,7 @@ export class CreateBankAccountComponent {
     const createBankAccountRequest = new CreateBankAccountRequest();
     createBankAccountRequest.name = this.name.value;
     createBankAccountRequest.bankName = this.bankName.value;
-    createBankAccountRequest.currentBalance = this.currentBalance.value ?? 0;
+    createBankAccountRequest.currentBalance = parseFloat(this.currentBalance.value.replace(/,/g, '') ?? 0);
     createBankAccountRequest.currency = this.currency.value;
     createBankAccountRequest.accountNumber = this.accountNumber.value;
     createBankAccountRequest.notes = this.notes.value;

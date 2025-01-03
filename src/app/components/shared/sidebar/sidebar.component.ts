@@ -4,6 +4,7 @@ import {AccountService} from '../../../services/accounts/account.service';
 import {NullProfileImagePipe} from '../../../pipes/null-profile-image.pipe';
 import {MenuOption} from '../../../models/utils/menuOption';
 import {NgClass} from '@angular/common';
+import {MsalService} from '@azure/msal-angular';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,13 +24,12 @@ export class SidebarComponent {
   menuOptions : MenuOption[] = [
     {name: 'Budget', route: '/home/budget'},
     {name: 'Accounts', route: '/home/accounts'},
-    {name: 'Transactions', route: '/home/transactions'},
-    //ADD PERIODS
-    {name: 'Periods', route: '/home/periods'},
+    {name: 'Profile', route: '/home/profile'},
   ];
 
   constructor(public accountService : AccountService,
-              private router : Router) {
+              private router : Router,
+              private authService : MsalService) {
   }
 
   protected readonly AccountService = AccountService;
@@ -47,5 +47,9 @@ export class SidebarComponent {
 
   getRouteNameByNumber(number: number) {
     return this.menuOptions[number].name;
+  }
+
+  signOut() {
+    this.authService.logout()
   }
 }

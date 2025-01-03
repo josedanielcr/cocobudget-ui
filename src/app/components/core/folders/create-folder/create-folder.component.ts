@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, signal, ViewChild, WritableSignal} from '@angular/core';
 import {NgClass} from '@angular/common';
 import {HSOverlay} from 'preline/preline';
-import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {merge} from 'rxjs';
 import {MessageService} from '../../../../services/utils/message.service';
@@ -15,7 +15,8 @@ import {AccountService} from '../../../../services/accounts/account.service';
   standalone: true,
   imports: [
     NgClass,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './create-folder.component.html',
   styleUrl: './create-folder.component.css'
@@ -79,5 +80,9 @@ export class CreateFolderComponent implements AfterViewInit {
 
   close() {
     HSOverlay.close(this.modalElementRef.nativeElement);
+  }
+
+  onSubmit($event: any) {
+    $event.preventDefault();
   }
 }

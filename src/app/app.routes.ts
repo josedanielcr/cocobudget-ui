@@ -6,7 +6,7 @@ import {LoginFailedComponent} from './login-failed/login-failed.component';
 import {BudgetComponent} from './pages/budget/budget.component';
 import {SetupComponent} from './pages/setup/setup.component';
 import {AccountsComponent} from './pages/accounts/accounts.component';
-import {TransactionsComponent} from './pages/transactions/transactions.component';
+import {ProfileComponent} from './pages/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +21,7 @@ export const routes: Routes = [
     children: [
       {
         path : '',
-        redirectTo: 'accounts',
+        redirectTo: 'budget',
         pathMatch: 'full'
       },
       {
@@ -37,8 +37,8 @@ export const routes: Routes = [
         component: AccountsComponent
       },
       {
-        path : 'transactions',
-        component: TransactionsComponent
+        path : 'profile',
+        component: ProfileComponent
       }
     ]
   },

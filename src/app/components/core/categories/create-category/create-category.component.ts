@@ -120,8 +120,6 @@ export class CreateCategoryComponent {
 
   private clearForm() {
     this.name.reset();
-    this.categoryType.setValue('');
-    this.currency.setValue('');
     this.finalDate.reset();
     this.generalTargetAmount.reset();
     this.targetAmount.reset();
